@@ -1,0 +1,26 @@
+language: cpp
+
+compiler:
+  - clang
+  - gcc
+
+branches:
+  only:
+    - master
+    - dev
+
+before_script:
+  - mkdir -p build
+  - mkdir -p install
+
+matrix:
+  include:
+    - os: linux
+    - os: osx
+
+script:
+  - cd build
+  - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} -DCPPCHECK=1 -DCMAKE_CXX_STANDARD=98 -DCMAKE_INSTALL_PREFIX=../install ..
+  - cmake --build . --target all
+  - ctest
+  - cmake --build . --target install
