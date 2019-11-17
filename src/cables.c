@@ -50,7 +50,7 @@ static int switch_delta_c(int relay_delta_c) { return (relay_delta_c == 0); }
  */
 static int switch_input(const rrosace_cables_input_t *p_input,
                         rrosace_cables_output_t *p_output) {
-  int switched = 0;
+  unsigned int switched = 0;
 
   if (switch_delta_c(p_input->relay_delta_e_c) &&
       switch_delta_c(p_input->relay_delta_th_c)) {

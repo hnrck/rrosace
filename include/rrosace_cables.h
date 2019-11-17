@@ -31,10 +31,11 @@ extern "C" {
 
 /** @struct rrosace_cables_input RROSACE cables input data from FCCs */
 struct rrosace_cables_input {
-  double delta_e_c;     /**< Elevator deflection command from FCCs */
-  double delta_th_c;    /**< Throttle command  from FCCs */
-  int relay_delta_e_c;  /**< Relay value for elevator deflection command */
-  int relay_delta_th_c; /**< Relay value for delta throttle command */
+  double delta_e_c;  /**< Elevator deflection command from FCCs */
+  double delta_th_c; /**< Throttle command  from FCCs */
+  unsigned int
+      relay_delta_e_c; /**< Relay value for elevator deflection command */
+  unsigned int relay_delta_th_c; /**< Relay value for delta throttle command */
 };
 
 /** @typedef Alias for cables input */
