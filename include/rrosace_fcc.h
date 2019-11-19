@@ -21,7 +21,7 @@
 #include <rrosace_constants.h>
 #include <rrosace_flight_mode.h>
 
-#define RROSACE_FCC_DEFAULT_FREQ (RROSACE_DEFAULT_PHYSICAL_FREQ)
+#define RROSACE_FCC_DEFAULT_FREQ (RROSACE_DEFAULT_CYBER_FREQ)
 
 #ifdef __cplusplus
 extern "C" {
