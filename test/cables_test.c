@@ -23,18 +23,8 @@ static int test_step_func(void) {
   const double deltas_e_c[] = {1.0, 2.0};
   const double deltas_th_c[] = {1.0, 2.0};
   rrosace_cables_input_t inputs[] = {
-      {
-          0.0,
-          0.0,
-          1,
-          1,
-      },
-      {
-          0.0,
-          0.0,
-          0,
-          0,
-      },
+      {0.0, 0.0, RROSACE_RELAY_CLOSED, RROSACE_RELAY_CLOSED},
+      {0.0, 0.0, RROSACE_RELAY_OPENED, RROSACE_RELAY_OPENED},
   };
   rrosace_cables_output_t output;
 
@@ -45,8 +35,8 @@ static int test_step_func(void) {
 
   rrosace_cables_step(inputs, sizeof(inputs), &output);
 
-  ret = ((output.delta_e_c == deltas_e_c[1]) &&
-         (output.delta_th_c == deltas_th_c[1]))
+  ret = ((output.delta_e_c == deltas_e_c[0]) &&
+         (output.delta_th_c == deltas_th_c[0]))
             ? EXIT_SUCCESS
             : EXIT_FAILURE;
 

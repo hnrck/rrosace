@@ -19,10 +19,13 @@
 
 #include <rrosace_cables.h>
 
+enum switch_state { NOT_SWITCHED = 0, SWITCHED = 1 };
+typedef enum switch_state switch_state_t;
+
 static void reset_output(rrosace_cables_output_t * /* p_output */);
 
-static int switch_input(const rrosace_cables_input_t * /* p_input */,
-                        rrosace_cables_output_t * /* p_output */);
+static switch_state_t switch_input(const rrosace_cables_input_t * /* p_input */,
+                                   rrosace_cables_output_t * /* p_output */);
 /**
  * @brief Reset cable output
  * @param[in,out] p_output a pointer to the cable output to reset
@@ -37,15 +40,15 @@ static void reset_output(rrosace_cables_output_t *p_output) {
  * @brief Compute output of cables from input if switches are closed
  * @param[in] input a pointer to the cables input
  * @param[out] output a pointer to the cables output if switch closed
- * @return The output state, True (!0) if switched, else False (0)
+ * @return The switch state, SWITCHED if switched, else NOT_SWITCHED
  */
-static int switch_input(const rrosace_cables_input_t *p_input,
-                        rrosace_cables_output_t *p_output) {
-  unsigned int switched = 0;
+static switch_state_t switch_input(const rrosace_cables_input_t *p_input,
+                                   rrosace_cables_output_t *p_output) {
+  switch_state_t switched = NOT_SWITCHED;
 
   if ((p_input->relay_delta_e_c == RROSACE_RELAY_CLOSED) &&
       (p_input->relay_delta_th_c == RROSACE_RELAY_CLOSED)) {
-    switched = 1;
+    switched = SWITCHED;
     p_output->delta_e_c = p_input->delta_e_c;
     p_output->delta_th_c = p_input->delta_th_c;
   }
@@ -57,7 +60,7 @@ int rrosace_cables_step(const rrosace_cables_input_t inputs[], size_t nb_input,
                         rrosace_cables_output_t *p_output) {
   int ret = EXIT_FAILURE;
   size_t it;
-  int output_selected;
+  switch_state_t output_selected = NOT_SWITCHED;
 
   if (!p_output) {
     goto out;
@@ -65,7 +68,8 @@ int rrosace_cables_step(const rrosace_cables_input_t inputs[], size_t nb_input,
 
   reset_output(p_output);
 
-  for (it = 0, output_selected = 0; (it < nb_input) && !output_selected; ++it) {
+  for (it = 0, output_selected = 0;
+       (it < nb_input) && (output_selected != SWITCHED); ++it) {
     output_selected = switch_input(&inputs[it], p_output);
   }
 
