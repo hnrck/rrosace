@@ -21,7 +21,7 @@
 #include <rrosace_constants.h>
 
 /** Cables default freq */
-#define RROSACE_CABLES_DEFAULT_FREQ (RROSACE_DEFAULT_CYBER_FREQ)
+#define RROSACE_CABLES_DEFAULT_FREQ (RROSACE_DEFAULT_PHYSICAL_FREQ)
 
 #include <stddef.h>
 
