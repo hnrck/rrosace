@@ -65,4 +65,11 @@
 /** Default frequency for physical components */
 #define RROSACE_DEFAULT_PHYSICAL_FREQ (RROSACE_FREQ_200_HZ)
 
+/** RROSACE relays states */
+enum rrosace_relay_state {
+  RROSACE_RELAY_CLOSED, /**< relay is closed, equivalent to True */
+  RROSACE_RELAY_OPENED  /**< relay is opened, equivalent to False */
+};
+typedef enum rrosace_relay_state rrosace_relay_state_t;
+
 #endif /* RROSACE_CONSTANTS_H */

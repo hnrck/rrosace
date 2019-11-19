@@ -21,8 +21,6 @@
 
 static void reset_output(rrosace_cables_output_t * /* p_output */);
 
-static int switch_delta_c(int /* relay_delta_c */);
-
 static int switch_input(const rrosace_cables_input_t * /* p_input */,
                         rrosace_cables_output_t * /* p_output */);
 /**
@@ -36,13 +34,6 @@ static void reset_output(rrosace_cables_output_t *p_output) {
 }
 
 /**
- * @brief Determine the state of a switch from its relay command
- * @param[in] relay_delta_c the relay command for differential command
- * @return State of the switch, True (!0) if closed, else False (0)
- */
-static int switch_delta_c(int relay_delta_c) { return (relay_delta_c == 0); }
-
-/**
  * @brief Compute output of cables from input if switches are closed
  * @param[in] input a pointer to the cables input
  * @param[out] output a pointer to the cables output if switch closed
@@ -52,8 +43,8 @@ static int switch_input(const rrosace_cables_input_t *p_input,
                         rrosace_cables_output_t *p_output) {
   unsigned int switched = 0;
 
-  if (switch_delta_c(p_input->relay_delta_e_c) &&
-      switch_delta_c(p_input->relay_delta_th_c)) {
+  if ((p_input->relay_delta_e_c == RROSACE_RELAY_CLOSED) &&
+      (p_input->relay_delta_th_c == RROSACE_RELAY_CLOSED)) {
     switched = 1;
     p_output->delta_e_c = p_input->delta_e_c;
     p_output->delta_th_c = p_input->delta_th_c;

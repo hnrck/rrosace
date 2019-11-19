@@ -33,8 +33,8 @@ static int test_step_func() {
   double delta_th_c;
   int other_master_in_law = 0;
   const double freq = RROSACE_FCC_DEFAULT_FREQ;
-  unsigned int relay_delta_e_c;
-  unsigned int relay_delta_th_c;
+  rrosace_relay_state_t relay_delta_e_c;
+  rrosace_relay_state_t relay_delta_th_c;
   unsigned int master_in_law;
 
   if (!p_fcc_com || !p_fcc_mon) {
