@@ -33,9 +33,6 @@
 #define KP_H (0.1014048)
 #define KI_H (0.0048288)
 
-/* Setpoint commands */
-/* #define Cl_alt_hold (2.57024) */
-
 /* Va Speed controller */
 #define K1_INT_VA (0.049802610664357)
 #define K1_VA (-0.486813084356079)
@@ -52,9 +49,14 @@ struct controller {
   double integrator;
 };
 
+enum controller_state {
+  NEED_REINIT,
+  CONTINUE
+};
+
 struct altitude_hold_controller {
   struct controller controller;
-  int need_reinit;
+  enum controller_state need_reinit;
   double old_vz_c;
 };
 
@@ -107,10 +109,10 @@ init_altitude_hold_integrator(altitude_hold_controller_t *p_altitude_hold,
     goto out;
   }
 
-  if (p_altitude_hold->need_reinit) {
+  if (p_altitude_hold->need_reinit == NEED_REINIT) {
     p_altitude_hold->controller.integrator =
         p_altitude_hold->old_vz_c - diff_h * KP_H;
-    p_altitude_hold->need_reinit = 0;
+    p_altitude_hold->need_reinit = CONTINUE;
   }
 
   ret = EXIT_SUCCESS;
@@ -131,11 +133,11 @@ static int altitude_hold_model(altitude_hold_controller_t *p_altitude_hold,
 
   if (diff_h < -H_SWITCH) {
     *p_vz = vz_c;
-    p_altitude_hold->need_reinit = 1;
+    p_altitude_hold->need_reinit = NEED_REINIT;
     p_altitude_hold->old_vz_c = *p_vz;
   } else if (diff_h > H_SWITCH) {
     *p_vz = -vz_c;
-    p_altitude_hold->need_reinit = 1;
+    p_altitude_hold->need_reinit = NEED_REINIT;
     p_altitude_hold->old_vz_c = *p_vz;
   } else {
     init_altitude_hold_integrator(p_altitude_hold, diff_h);
@@ -298,7 +300,7 @@ rrosace_fcc_t *rrosace_fcc_new() {
   }
 
   p_fcc->altitude_hold.controller.integrator = 0.;
-  p_fcc->altitude_hold.need_reinit = 1;
+  p_fcc->altitude_hold.need_reinit = NEED_REINIT;
   p_fcc->altitude_hold.old_vz_c = 0.;
   p_fcc->vz_control.integrator = RROSACE_DELTA_E_C_EQ;
   p_fcc->va_control.integrator = RROSACE_DELTA_TH_C_EQ;
