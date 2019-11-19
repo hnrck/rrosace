@@ -60,7 +60,7 @@ int rrosace_cables_step(const rrosace_cables_input_t inputs[], size_t nb_input,
                         rrosace_cables_output_t *p_output) {
   int ret = EXIT_FAILURE;
   size_t it;
-  switch_state_t output_selected = NOT_SWITCHED;
+  switch_state_t output_selected;
 
   if (!p_output) {
     goto out;
@@ -68,7 +68,7 @@ int rrosace_cables_step(const rrosace_cables_input_t inputs[], size_t nb_input,
 
   reset_output(p_output);
 
-  for (it = 0, output_selected = 0;
+  for (it = 0, output_selected = NOT_SWITCHED;
        (it < nb_input) && (output_selected != SWITCHED); ++it) {
     output_selected = switch_input(&inputs[it], p_output);
   }
