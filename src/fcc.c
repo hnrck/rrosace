@@ -275,8 +275,11 @@ static int fcc_step(rrosace_fcc_t *p_fcc, rrosace_mode_t flight_mode,
             ? RROSACE_RELAY_CLOSED
             : RROSACE_RELAY_OPENED;
 
-    master_in_law = (master_in_law == RROSACE_MASTER_IN_LAW) &&
-                    (*p_other_master_in_law == RROSACE_NOT_MASTER_IN_LAW);
+    master_in_law =
+        (master_in_law == RROSACE_MASTER_IN_LAW) &&
+                (*p_other_master_in_law == RROSACE_NOT_MASTER_IN_LAW)
+            ? RROSACE_MASTER_IN_LAW
+            : RROSACE_NOT_MASTER_IN_LAW;
 
     *p_relay_delta_e_c = relay_delta_e_c;
     *p_relay_delta_th_c = relay_delta_th_c;
