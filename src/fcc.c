@@ -23,8 +23,8 @@
 #include <rrosace_fcc.h>
 
 /* Espsilons */
-#define EPSILON_DELTA_E_C (0.001)
-#define EPSILON_DELTA_TH_C (0.001)
+#define EPSILON_DELTA_E_C (RROSACE_TIME_RESOLUTION)
+#define EPSILON_DELTA_TH_C (RROSACE_TIME_RESOLUTION)
 
 /* Controller parameters */
 #define H_SWITCH (50.0)

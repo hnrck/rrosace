@@ -53,6 +53,9 @@
 /** Initial filtered vertical acceleration */
 #define RROSACE_AZ_F_EQ (RROSACE_AZ_EQ)
 
+/** time resolution */
+#define RROSACE_TIME_RESOLUTION (1e-3)
+
 /** 50Hz frequency */
 #define RROSACE_FREQ_50_HZ (50.)
 /** 100Hz frequency */
