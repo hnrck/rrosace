@@ -239,4 +239,4 @@ Contributions are welcome :unlock:. Feel free to fork too :fork_and_knife:.
 - Henrick Deschamps  ([:octocat: hnrck](https://github.com/hnrck) ) ([:globe_with_meridians: hnrck.io](https://hnrck.io))
 
 ## 6. License
-This work is under the [MIT License](https://github.com/hnrck/pretended-blockchain/blob/master/LICENSE). :copyright: Henrick Deschamps, 2018.
+This work is under the [MIT License](https://github.com/hnrck/pretended-blockchain/blob/master/LICENSE). :copyright: Henrick Deschamps, 2019.
