@@ -93,10 +93,10 @@ int rrosace_fcc_mon_step(rrosace_fcc_t *p_fcc, rrosace_mode_t mode, double h_f,
                          double h_c, double vz_c, double va_c,
                          double delta_e_c_monitored,
                          double delta_th_c_monitored,
-                         unsigned int other_master_in_law,
+                         rrosace_master_in_law_t other_master_in_law,
                          rrosace_relay_state_t *p_relay_delta_e_c,
                          rrosace_relay_state_t *p_relay_delta_th_c,
-                         unsigned int *p_master_in_law, double dt);
+                         rrosace_master_in_law_t *p_master_in_law, double dt);
 
 #ifdef __cplusplus
 }

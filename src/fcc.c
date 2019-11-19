@@ -91,11 +91,12 @@ static int fcc_step(rrosace_fcc_t * /* p_fcc */, rrosace_mode_t /* mode */,
                     double /* vz_c */, double /* va_c */,
                     const double * /* p_delta_e_c_monitored */,
                     const double * /* p_delta_th_c_monitored */,
-                    const unsigned int * /* p_other_master_in_law */,
+                    const rrosace_master_in_law_t * /* p_other_master_in_law */,
                     double * /* p_delta_e_c */, double * /* p_delta_th_c */,
                     rrosace_relay_state_t * /* p_relay_delta_e_c */,
                     rrosace_relay_state_t * /* p_relay_delta_th_c */,
-                    unsigned int * /* p_master_in_law */, double /* dt */);
+                    rrosace_master_in_law_t * /* p_master_in_law */,
+                    double /* dt */);
 
 static int
 init_altitude_hold_integrator(altitude_hold_controller_t *p_altitude_hold,
@@ -199,11 +200,11 @@ static int fcc_step(rrosace_fcc_t *p_fcc, rrosace_mode_t flight_mode,
                     double az_f, double h_c, double vz_c, double va_c,
                     const double *p_delta_e_c_monitored,
                     const double *p_delta_th_c_monitored,
-                    const unsigned int *p_other_master_in_law,
+                    const rrosace_master_in_law_t *p_other_master_in_law,
                     double *p_delta_e_c, double *p_delta_th_c,
                     rrosace_relay_state_t *p_relay_delta_e_c,
                     rrosace_relay_state_t *p_relay_delta_th_c,
-                    unsigned int *p_master_in_law, double dt) {
+                    rrosace_master_in_law_t *p_master_in_law, double dt) {
 
   int ret = EXIT_FAILURE;
   double computed_vz_c;
@@ -246,29 +247,34 @@ static int fcc_step(rrosace_fcc_t *p_fcc, rrosace_mode_t flight_mode,
   } else {
     rrosace_relay_state_t relay_delta_e_c;
     rrosace_relay_state_t relay_delta_th_c;
-    unsigned int master_in_law;
+    rrosace_master_in_law_t master_in_law;
 
     relay_delta_e_c =
         fabs(delta_e_c - *p_delta_e_c_monitored) >= EPSILON_DELTA_E_C
             ? RROSACE_RELAY_OPENED
             : RROSACE_RELAY_CLOSED;
+
     relay_delta_th_c =
         fabs(delta_th_c - *p_delta_th_c_monitored) >= EPSILON_DELTA_TH_C
             ? RROSACE_RELAY_OPENED
             : RROSACE_RELAY_CLOSED;
+
     master_in_law = (relay_delta_e_c == RROSACE_RELAY_CLOSED) &&
-                    (relay_delta_th_c == RROSACE_RELAY_CLOSED);
+                            (relay_delta_th_c == RROSACE_RELAY_CLOSED)
+                        ? RROSACE_MASTER_IN_LAW
+                        : RROSACE_NOT_MASTER_IN_LAW;
 
-    relay_delta_e_c =
-        (relay_delta_e_c == RROSACE_RELAY_CLOSED) & *p_other_master_in_law
-            ? RROSACE_RELAY_CLOSED
-            : RROSACE_RELAY_OPENED;
-    relay_delta_th_c =
-        (relay_delta_th_c == RROSACE_RELAY_CLOSED) & *p_other_master_in_law
-            ? RROSACE_RELAY_CLOSED
-            : RROSACE_RELAY_OPENED;
+    relay_delta_e_c = (relay_delta_e_c == RROSACE_RELAY_CLOSED) &&
+                              (*p_other_master_in_law == RROSACE_MASTER_IN_LAW)
+                          ? RROSACE_RELAY_CLOSED
+                          : RROSACE_RELAY_OPENED;
+    relay_delta_th_c = (relay_delta_th_c == RROSACE_RELAY_CLOSED) &&
+                               (*p_other_master_in_law == RROSACE_MASTER_IN_LAW)
+                           ? RROSACE_RELAY_CLOSED
+                           : RROSACE_RELAY_OPENED;
 
-    master_in_law &= (unsigned int)!*p_other_master_in_law;
+    master_in_law = (master_in_law == RROSACE_MASTER_IN_LAW) &&
+                    (*p_other_master_in_law == RROSACE_NOT_MASTER_IN_LAW);
 
     *p_relay_delta_e_c = relay_delta_e_c;
     *p_relay_delta_th_c = relay_delta_th_c;

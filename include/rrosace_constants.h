@@ -75,4 +75,11 @@ enum rrosace_relay_state {
 };
 typedef enum rrosace_relay_state rrosace_relay_state_t;
 
+/** RROSACE master in law states */
+enum rrosace_master_in_law {
+  RROSACE_MASTER_IN_LAW,    /**< is master in law */
+  RROSACE_NOT_MASTER_IN_LAW /**< is not master in law */
+};
+typedef enum rrosace_master_in_law rrosace_master_in_law_t;
+
 #endif /* RROSACE_CONSTANTS_H */
