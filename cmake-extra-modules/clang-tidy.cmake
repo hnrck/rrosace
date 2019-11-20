@@ -18,7 +18,7 @@ if (CLANG-TIDY)
 
     set(CLANG_TIDY_CHECKS "*,-clang-analyzer-alpha.*,-llvm-header-guard,-fuchsia-*")
     set(CLANG_TIDY_C_STD c89)
-    set(CLANG_TIDY_CXX_STD c++98)
+    set(CLANG_TIDY_CXX_STD c++${CMAKE_CXX_STANDARD})
 
     foreach (SRC ${SRCS})
         add_custom_command(TARGET lint COMMAND ${CLANG-TIDY} -checks=${CLANG_TIDY_CHECKS} ${SRC} -- -std=${CLANG_TIDY_C_STD} -I${INCS_DIR})
