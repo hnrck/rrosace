@@ -109,7 +109,12 @@ Furthermore, while installing, the absolute path of the ```rrosacepathsrc``` is 
 After installation and sourcing, ```rrosace``` library can be used as any library.
 Compilation using ````rrosace```` library while need linking, using ```-lrrosace```.
 
-The following integration of component is recommended:
+The installation can be checked using the simple loop example.
+``` bash
+$ make check_install
+```
+
+The following integration of component is recommended, and used in the loop example:
 ![rrosace_components](/res/rrosace_components.png)
 
 ### 1.5. Other targets
@@ -130,6 +135,16 @@ Formatting of source code (requires clang-format):
 
 ```bash
 make format
+```
+
+Building / running a simple loop example:
+
+```bash
+make example_loop
+```
+
+```bash
+make run_example_loop
 ```
 
 ### 1.6. Alternative builds and configurations
@@ -175,61 +190,42 @@ RROSACE is based on the Open Source ROSACE (Research Open-Source Avionics and Co
 ## 3. Project structure
 ```bash
 .
-├── CMakeLists.txt
 ├── ChangeLog.md
+├── cmake-extra-modules
+│   └── *.cmake
+├── CMakeLists.txt
+├── doc
+│   └── Doxyfile.in
+├── examples
+│   └── *
+│       └── {Makefile,*.{h,c,cpp}}
+├── include
+│   └── rrosace{-*}.h
 ├── LICENSE
 ├── Makefile
 ├── README.md
-├── VERSION
-├── cmake-extra-modules
-│   ├── clang-format.cmake
-│   └── clang-tidy.cmake
-├── doc
-│   └── Doxyfile.in
-├── include
-│   ├── rrosace.h
-│   ├── rrosace_cables.h
-│   ├── rrosace_constants.h
-│   ├── rrosace_elevator.h
-│   ├── rrosace_engine.h
-│   ├── rrosace_fcc.h
-│   ├── rrosace_fcu.h
-│   ├── rrosace_filters.h
-│   ├── rrosace_flight_dynamics.h
-│   └── rrosace_flight_mode.h
+├── res
+│   └── *
 ├── src
-│   ├── cables.c
-│   ├── elevator.c
-│   ├── engine.c
-│   ├── fcc.c
-│   ├── fcu.c
-│   ├── filters.c
-│   ├── flight_dynamics.c
-│   └── flight_mode.c
-└── test
-    ├── cables_test.c
-    ├── cpp_test.cpp
-    ├── elevator_test.c
-    ├── engine_test.c
-    ├── fcc_test.c
-    ├── fcu_test.c
-    ├── filters_test.c
-    ├── flight_dynamics_test.c
-    ├── flight_mode_test.c
-    ├── test_common.c
-    └── test_common.h
+│   └── *.c
+├── test
+│   └── *.{h,c,cpp}
+└── VERSION
 ```
+
 Important folders:
 - ```include``` - the rrosace headers.
 - ```src``` - the sources of the rrosace library.
 - ```test``` - the rrosace tests folders.
+- ```examples``` - the rrosace examples folders, each example has a dedicated folder.
 
 Important files:
 - ```README.md``` - this file.
-- ```ChangeLog.md``` - list of changes between revisions.
 - ```LICENSE``` - the license file.
+- ```VERSION``` - the current version of the library.
+- ```ChangeLog.md``` - list of changes between revisions.
 - ```CMakeLists.txt``` - the project configuration file
-- ```Makefile``` - helper for compilation and installation
+- ```Makefile``` - helper for compilation and installation.
 
 
 ## 4. Contributing
