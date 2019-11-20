@@ -37,6 +37,7 @@ if (CLANG-TIDY)
     endforeach (TEST ${CXX_TESTS})
 
     foreach (EXAMPLE ${EXAMPLES})
-      add_custom_command(TARGET lint COMMAND ${CLANG-TIDY} -checks=${CLANG_TIDY_CHECKS} ${EXAMPLE} -- -std=${CLANG_TIDY_C_STD} -I${INCS_DIR})
+        add_custom_command(TARGET lint COMMAND ${CLANG-TIDY} -checks=${CLANG_TIDY_CHECKS} ${EXAMPLE} -- -std=${CLANG_TIDY_C_STD} -I${INCS_DIR})
     endforeach (EXAMPLE ${EXAMPLES})
+
 endif (CLANG-TIDY)

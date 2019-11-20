@@ -137,7 +137,7 @@ static void delete_models(models_t *p_models) {
   rrosace_flight_mode_del(p_models->p_flight_mode);
   rrosace_fcu_del(p_models->p_fcu);
 
-  for (i = 0; i < sizeof(p_models->p_fccs) / sizeof *(p_models->p_fccs); ++i) {
+  for (i = 0; i < NB_FCCS; ++i) {
     rrosace_fcc_del(p_models->p_fccs[i]);
   }
 

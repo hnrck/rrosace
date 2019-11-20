@@ -19,7 +19,11 @@
 #endif /* nullptr */
 #endif /* __cplusplus <= 199711L */
 
+#if __cplusplus <= 199711L
 int main() {
+#else
+auto main() -> int {
+#endif /* __cplusplus <= 199711L */
   std::cout << "Checking function reachability" << std::endl;
   std::cout << "This test is considered as a success when the executable "
                "succesfully link with the librrosace..."
@@ -29,7 +33,7 @@ int main() {
   // Elevator
   ret &= ((&rrosace_elevator_new) != nullptr);
   ret &= ((&rrosace_elevator_del) != nullptr);
-  ret &= ((&rrosace_elevator_del) != nullptr);
+  ret &= ((&rrosace_elevator_step) != nullptr);
 
   // Engine
   ret &= ((&rrosace_engine_new) != nullptr);
