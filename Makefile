@@ -38,6 +38,14 @@ install: all
 test: all
 	cmake --build ${BUILD_DIR} --target ${@}
 
+# Simple loop for illustration
+example_loop: all
+	cmake --build ${BUILD_DIR} --target ${@}
+
+# Run simple loop
+run_example_loop: example_loop
+	${BUILD_DIR}/usr/bin/$^
+
 # Format files
 format:
 	cmake --build ${BUILD_DIR} --target ${@}

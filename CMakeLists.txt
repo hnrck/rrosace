@@ -146,6 +146,19 @@ endif (MEMCHECK)
 
 
 #-----------------------------------------------------------------------------------------------------------------------
+# Examples
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY usr/bin)
+
+# Simple simulation loop
+add_executable(example_loop ${CMAKE_SOURCE_DIR}/examples/loop/main.c)
+target_link_libraries(example_loop rrosace)
+set_target_properties(example_loop PROPERTIES SOVERSION ${ABI_VERSION_MAJOR} VERSION ${ABI_VERSION})
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------------------------------------------------
 # Installation
 
 # Include file to install
