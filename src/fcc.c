@@ -49,10 +49,7 @@ struct controller {
   double integrator;
 };
 
-enum controller_state {
-  NEED_REINIT,
-  CONTINUE
-};
+enum controller_state { NEED_REINIT, CONTINUE };
 
 struct altitude_hold_controller {
   struct controller controller;
