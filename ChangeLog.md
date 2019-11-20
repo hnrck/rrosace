@@ -1,5 +1,8 @@
 # Revision history for rrosace
 
-## 1.0.0  -- 2016-06-10
+## 1.1.0  -- 2019-11-20
 
-* First version.
+* Fixing minor issues and style
+* Improving code lisibility
+* Adding an example
+* Adding an installation test
