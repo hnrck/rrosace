@@ -209,9 +209,9 @@ static int fcc_step(rrosace_fcc_t *p_fcc, rrosace_mode_t flight_mode,
   double computed_vz_c;
   double delta_e_c;
   double delta_th_c;
-  const int is_com = (p_delta_e_c_monitored == NULL) ||
-                     (p_delta_th_c_monitored == NULL) ||
-                     (p_other_master_in_law == NULL);
+  const unsigned int is_com = (p_delta_e_c_monitored == NULL) ||
+                              (p_delta_th_c_monitored == NULL) ||
+                              (p_other_master_in_law == NULL);
 
   if (!p_fcc) {
     goto out;
