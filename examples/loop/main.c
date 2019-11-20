@@ -14,6 +14,9 @@
 
 #define SIMPLE_LOOP_VZ_C (2.5)
 
+#define NB_FCCS_COUPLES (2)
+#define NB_FCCS (NB_FCCS_COUPLES * 2)
+
 struct models {
   rrosace_engine_t *p_engine;
   rrosace_elevator_t *p_elevator;
@@ -25,17 +28,17 @@ struct models {
   rrosace_filter_t *p_az_filter;
   rrosace_flight_mode_t *p_flight_mode;
   rrosace_fcu_t *p_fcu;
-  rrosace_fcc_t *p_fccs[4];
+  rrosace_fcc_t *p_fccs[NB_FCCS];
 };
 typedef struct models models_t;
 
 struct values {
   rrosace_mode_t mode;
   double delta_e;
-  double delta_e_c_partial[2];
-  double delta_th_c_partial[2];
-  rrosace_relay_state_t relay_delta_e_c[2];
-  rrosace_relay_state_t relay_delta_th_c[2];
+  double delta_e_c_partial[NB_FCCS_COUPLES];
+  double delta_th_c_partial[NB_FCCS_COUPLES];
+  rrosace_relay_state_t relay_delta_e_c[NB_FCCS_COUPLES];
+  rrosace_relay_state_t relay_delta_th_c[NB_FCCS_COUPLES];
   double delta_e_c;
   double delta_th_c;
   double t;
@@ -49,8 +52,8 @@ struct values {
   double va_f;
   double q_f;
   double az_f;
-  rrosace_master_in_law_t master_in_laws[2];
-  rrosace_master_in_law_t other_master_in_laws[2];
+  rrosace_master_in_law_t master_in_laws[NB_FCCS_COUPLES];
+  rrosace_master_in_law_t other_master_in_laws[NB_FCCS_COUPLES];
   double h_c;
   double vz_c;
   double va_c;
@@ -92,7 +95,7 @@ static int create_models(models_t *p_models) {
   p_models->p_flight_mode = rrosace_flight_mode_new();
   p_models->p_fcu = rrosace_fcu_new();
 
-  for (i = 0; i < sizeof(p_models->p_fccs) / sizeof *(p_models->p_fccs); ++i) {
+  for (i = 0; i < NB_FCCS; ++i) {
     p_models->p_fccs[i] = rrosace_fcc_new();
   }
 
@@ -104,7 +107,7 @@ static int create_models(models_t *p_models) {
     goto out;
   }
 
-  for (i = 0; i < sizeof(p_models->p_fccs) / sizeof *(p_models->p_fccs); ++i) {
+  for (i = 0; i < NB_FCCS; ++i) {
     if (!p_models->p_fccs[i]) {
       goto out;
     }
@@ -284,7 +287,7 @@ static int simulation_step(models_t *p_models, values_t *p_values,
 
   if (logical_time % fcc_logical_period == 0) {
     dt = 1. / RROSACE_FCC_DEFAULT_FREQ;
-    for (i = 0; i < 2; ++i) {
+    for (i = 0; i < NB_FCCS_COUPLES; ++i) {
       rrosace_fcc_com_step(p_models->p_fccs[i], p_values->mode, p_values->h_f,
                            p_values->vz_f, p_values->va_f, p_values->q_f,
                            p_values->az_f, p_values->h_c, p_values->vz_c,
@@ -292,23 +295,22 @@ static int simulation_step(models_t *p_models, values_t *p_values,
                            &p_values->delta_th_c_partial[i], dt);
     }
 
-    for (i = 2; i < 4; ++i) {
+    for (i = 0; i < NB_FCCS_COUPLES; ++i) {
       rrosace_fcc_mon_step(
-          p_models->p_fccs[i], p_values->mode, p_values->h_f, p_values->vz_f,
-          p_values->va_f, p_values->q_f, p_values->az_f, p_values->h_c,
-          p_values->vz_c, p_values->va_c, p_values->delta_e_c_partial[i - 2],
-          p_values->delta_th_c_partial[i - 2],
-          p_values->other_master_in_laws[i - 2],
-          &p_values->relay_delta_e_c[i - 2], &p_values->relay_delta_th_c[i - 2],
-          &p_values->master_in_laws[i - 2], dt);
+          p_models->p_fccs[i + NB_FCCS_COUPLES], p_values->mode, p_values->h_f,
+          p_values->vz_f, p_values->va_f, p_values->q_f, p_values->az_f,
+          p_values->h_c, p_values->vz_c, p_values->va_c,
+          p_values->delta_e_c_partial[i], p_values->delta_th_c_partial[i],
+          p_values->other_master_in_laws[i], &p_values->relay_delta_e_c[i],
+          &p_values->relay_delta_th_c[i], &p_values->master_in_laws[i], dt);
     }
   }
 
   if (logical_time % cables_logical_period == 0) {
-    rrosace_cables_input_t cables_input[2];
+    rrosace_cables_input_t cables_input[NB_FCCS_COUPLES];
     rrosace_cables_output_t cables_output;
 
-    for (i = 0; i < sizeof(cables_input) / sizeof *(cables_input); ++i) {
+    for (i = 0; i < NB_FCCS_COUPLES; ++i) {
       cables_input[i].delta_e_c = p_values->delta_e_c_partial[i];
       cables_input[i].delta_th_c = p_values->delta_th_c_partial[i];
       cables_input[i].relay_delta_e_c = p_values->relay_delta_e_c[i];
