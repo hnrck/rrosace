@@ -31,8 +31,12 @@ build: gen
 	cmake --build ${BUILD_DIR} --target all
 
 # Install built library and headers
-install: all
+install: build
 	cmake --build ${BUILD_DIR} --target ${@}
+
+# Install built library and headers
+check_install: install
+	${MAKE} -C examples/loop ${@}
 
 # Run tests
 test: all
@@ -47,11 +51,11 @@ run_example_loop: example_loop
 	${BUILD_DIR}/usr/bin/$^
 
 # Format files
-format:
+format: gen
 	cmake --build ${BUILD_DIR} --target ${@}
 
 # Static code checking
-lint:
+lint: gen
 	cmake --build ${BUILD_DIR} --target ${@}
 
 # Remove build environment
