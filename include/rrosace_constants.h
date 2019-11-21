@@ -7,8 +7,7 @@
  * @date 2016-08-01
  *
  * Based on the Open Source ROSACE (Research Open-Source Avionics and Control
- * Engineering) case study.
- * Implementations of ROSACE available at:
+ * Engineering) case study. Implementations of ROSACE available at:
  * https://svn.onera.fr/schedmcore/branches/ROSACE_CaseStudy/
  * Publication of ROSACE available at:
  * https://oatao.univ-toulouse.fr/11522/1/Siron_11522.pdf
@@ -56,15 +55,16 @@
 /** time resolution */
 #define RROSACE_TIME_RESOLUTION (1e-3)
 
-/** 50Hz frequency */
-#define RROSACE_FREQ_50_HZ (50.)
-/** 100Hz frequency */
-#define RROSACE_FREQ_100_HZ (100.)
-/** 200Hz frequency */
-#define RROSACE_FREQ_200_HZ (200.)
+enum rrosace_default_freq {
+  RROSACE_FREQ_50_HZ = 50,   /**< 50Hz frequency */
+  RROSACE_FREQ_100_HZ = 100, /**< 100Hz frequency */
+  RROSACE_FREQ_200_HZ = 200  /**< 200Hz frequency */
+};
+typedef enum rrosace_default_freq rrosace_default_freq_t;
 
 /** Default frequency for cyber components */
 #define RROSACE_DEFAULT_CYBER_FREQ (RROSACE_FREQ_50_HZ)
+
 /** Default frequency for physical components */
 #define RROSACE_DEFAULT_PHYSICAL_FREQ (RROSACE_FREQ_200_HZ)
 
@@ -81,5 +81,69 @@ enum rrosace_master_in_law {
   RROSACE_NOT_MASTER_IN_LAW /**< is not master in law */
 };
 typedef enum rrosace_master_in_law rrosace_master_in_law_t;
+
+#ifdef __cplusplus
+namespace RROSACE {
+
+/** Initial elevator deflection command */
+static const double DELTA_E_EQ = RROSACE_DELTA_E_EQ;
+/** Initial throttle */
+static const double DELTA_TH_EQ = RROSACE_DELTA_TH_EQ;
+/** Initial thrust */
+static const double T_EQ = RROSACE_T_EQ;
+/** Initial elevator deflection command */
+static const double DELTA_E_C_EQ = RROSACE_DELTA_E_C_EQ;
+/** Initial delta throttle command */
+static const double DELTA_TH_C_EQ = RROSACE_DELTA_TH_C_EQ;
+
+/** Initial Altitude */
+static const double H_EQ = RROSACE_H_EQ;
+/** Iintial true airspeed */
+static const double VA_EQ = RROSACE_VA_EQ;
+/** Initial vertical speed */
+static const double VZ_EQ = RROSACE_VZ_EQ;
+/** Initial pitch rate */
+static const double Q_EQ = RROSACE_Q_EQ;
+/** Initial vertical acceleration */
+static const double AZ_EQ = RROSACE_AZ_EQ;
+
+/** Initial filtered altitude */
+static const double H_F_EQ = RROSACE_H_F_EQ;
+/** Initial filtered airspeed */
+static const double VA_F_EQ = RROSACE_VA_F_EQ;
+/** Initial filtered vertical speed */
+static const double VZ_F_EQ = RROSACE_VZ_F_EQ;
+/** Initial filtered pitch rate */
+static const double Q_F_EQ = RROSACE_Q_F_EQ;
+/** Initial filtered vertical acceleration */
+static const double AZ_F_EQ = RROSACE_AZ_F_EQ;
+
+/** time resolution */
+static const double TIME_RESOLUTION = RROSACE_TIME_RESOLUTION;
+
+/** 50Hz frequency */
+static const int FREQ_50_HZ = RROSACE_FREQ_50_HZ;
+/** 100Hz frequency */
+static const int FREQ_100_HZ = RROSACE_FREQ_100_HZ;
+/** 200Hz frequency */
+static const int FREQ_200_HZ = RROSACE_FREQ_200_HZ;
+
+/** Default frequency for cyber components */
+static const int DEFAULT_CYBER_FREQ = RROSACE_DEFAULT_CYBER_FREQ;
+/** Default frequency for physical components */
+static const int DEFAULT_PHYSICAL_FREQ = RROSACE_DEFAULT_PHYSICAL_FREQ;
+
+/** Relay is closed, equivalent to True */
+static const int RELAY_CLOSED = RROSACE_RELAY_CLOSED;
+/** Relay is opened, equivalent to False */
+static const int RELAY_OPENED = RROSACE_RELAY_OPENED;
+
+/** Is master in law */
+static const int MASTER_IN_LAW = RROSACE_MASTER_IN_LAW;
+/** Is not master in law */
+static const int NOT_MASTER_IN_LAW = RROSACE_NOT_MASTER_IN_LAW;
+
+} /* namespace RROSACE */
+#endif /* __cplusplus */
 
 #endif /* RROSACE_CONSTANTS_H */
