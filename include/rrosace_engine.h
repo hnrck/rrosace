@@ -18,6 +18,7 @@
 #ifndef RROSACE_ENGINE_H
 #define RROSACE_ENGINE_H
 
+#include <rrosace_common.h>
 #include <rrosace_constants.h>
 
 /** Engine parameter tau */
@@ -34,7 +35,11 @@ extern "C" {
 struct rrosace_engine;
 
 /** @typedef Engine model */
+#if __cplusplus <= 199711L
 typedef struct rrosace_engine rrosace_engine_t;
+#else
+using rrosace_engine_t = struct rrosace_engine;
+#endif
 
 /**
  * @brief Create and initialize a new engine model
@@ -42,6 +47,13 @@ typedef struct rrosace_engine rrosace_engine_t;
  * @return A new engine
  */
 rrosace_engine_t *rrosace_engine_new(double tau);
+
+/**
+ * @brief Copy an engine in a new one
+ * @param[in] p_other the engine to copy
+ * @return A new engine
+ */
+rrosace_engine_t *rrosace_engine_copy(rrosace_engine_t *p_other);
 
 /**
  * @brief Destroy an engine
@@ -61,6 +73,85 @@ int rrosace_engine_step(rrosace_engine_t *p_engine, double delta_th_c,
                         double *p_t, double dt);
 
 #ifdef __cplusplus
+namespace RROSACE {
+
+/** Engine default parameter tau */
+static const double TAU = RROSACE_TAU;
+
+/** @class Elevator
+ *  @brief C++ wrapper for C-based elevator, based on Model interface.
+ */
+class Engine
+#if __cplusplus > 199711L
+    final
+#endif /* __cplusplus > 199711L */
+    : public Model {
+private:
+  /** Wrapped C-based elevator */
+  rrosace_engine_t *p_engine; /**< C-struct engine wrapped */
+
+public:
+  /** Default elevator frequency */
+  static const int DEFAULT_FREQ = RROSACE_ENGINE_DEFAULT_FREQ;
+
+  /**
+   * @brief Elevator constructor
+   * @param[in] tau The engine tau parameter
+   */
+  explicit Engine(double tau) : p_engine(rrosace_engine_new(tau)) {}
+
+  /**
+   * @brief Elevator copy constructor
+   * @param[in] other another elevator to construct
+   */
+  Engine(const Engine &other) : p_engine(rrosace_engine_copy(other.p_engine)) {}
+
+  /**
+   * @brief Elevator copy assignement
+   * @param[in] other another elevator to construct
+   */
+  Engine &operator=(const Engine &other) {
+    p_engine = rrosace_engine_copy(other.p_engine);
+    return *this;
+  }
+
+#if __cplusplus > 199711L
+
+  /**
+   * @brief Elevator move constructor
+   * @param[in] ' ' an elevator to move
+   */
+  Engine(Engine &&) = default;
+
+  /**
+   * @brief Elevator move assignement
+   * @param[in] ' ' an elevator to move
+   */
+  Engine &operator=(Engine &&) = default;
+
+#endif /* __cplusplus > 199711L */
+
+  /**
+   * @brief Elevator destructor
+   */
+  ~Engine() { rrosace_engine_del(p_engine); }
+
+/**
+ * @brief  Execute an engine model instance
+ * @param[in] delta_th_c The commanded delta throttle
+ * @param[out] t The simulated thrust
+ * @param[in] dt The execution period of the engine model instance, default 1 /
+ * DEFAULT_FREQ
+ * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  int step(double delta_th_c, double &t, double dt = 1. / DEFAULT_FREQ) {
+    return rrosace_engine_step(p_engine, delta_th_c, &t, dt);
+  }
+};
+} /* namespace RROSACE */
 } /* extern "C" */
 #endif /* __cplusplus */
 

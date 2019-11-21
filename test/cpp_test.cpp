@@ -39,9 +39,12 @@ auto main() -> int {
   }
 
   // Engine
-  ret &= ((&rrosace_engine_new) != nullptr);
-  ret &= ((&rrosace_engine_del) != nullptr);
-  ret &= ((&rrosace_engine_step) != nullptr);
+  {
+    double t;
+
+    RROSACE::Engine engine = RROSACE::Engine(RROSACE::TAU);
+    (void)engine.step(RROSACE::DELTA_E_C_EQ, t);
+  }
 
   // FCCs
   ret &= ((&rrosace_fcc_new) != nullptr);

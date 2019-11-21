@@ -42,6 +42,18 @@ out:
   return (p_engine);
 }
 
+rrosace_engine_t *rrosace_engine_copy(rrosace_engine_t *p_other) {
+  rrosace_engine_t *p_engine = rrosace_engine_new(p_other->tau);
+
+  if (!p_engine) {
+    goto out;
+  }
+
+  p_engine->x = p_other->x;
+out:
+  return (p_engine);
+}
+
 void rrosace_engine_del(rrosace_engine_t *p_engine) {
   if (p_engine) {
     free(p_engine);
