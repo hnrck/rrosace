@@ -290,7 +290,7 @@ out:
 }
 
 rrosace_fcc_t *rrosace_fcc_new() {
-  rrosace_fcc_t *p_fcc = calloc(1, sizeof(rrosace_fcc_t));
+  rrosace_fcc_t *p_fcc = (rrosace_fcc_t *)calloc(1, sizeof(rrosace_fcc_t));
 
   if (!p_fcc) {
     goto out;
