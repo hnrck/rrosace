@@ -19,10 +19,11 @@
 #ifndef RROSACE_ELEVATOR_H
 #define RROSACE_ELEVATOR_H
 
+#include <rrosace_common.h>
 #include <rrosace_constants.h>
 
 /** Elevator parameter omega */
-#define RROSACE_OMEGA (25.)
+#define RROSACE_OMEGA (25)
 /** Elevator parameter xi */
 #define RROSACE_XI (0.85)
 
@@ -48,6 +49,13 @@ typedef struct rrosace_elevator rrosace_elevator_t;
 rrosace_elevator_t *rrosace_elevator_new(double omega, double xi);
 
 /**
+ * @brief Copy an elevator in a new one
+ * @param[in] p_other the elevator to copy
+ * @return A new elevator
+ */
+rrosace_elevator_t *rrosace_elevator_copy(rrosace_elevator_t *p_other);
+
+/**
  * @brief Destroy an elevator
  * @param[in,out] p_elevator The elevator to destroy
  */
@@ -65,6 +73,91 @@ int rrosace_elevator_step(rrosace_elevator_t *p_elevator, double delta_e_c,
                           double *p_delta_e, double dt);
 
 #ifdef __cplusplus
+namespace RROSACE {
+
+/** Elevator default parameter omega */
+static const double OMEGA = RROSACE_OMEGA;
+
+/** Elevator default parameter xi */
+static const double XI = RROSACE_XI;
+
+/** @class Elevator
+ *  @brief C++ wrapper for C-based elevator, based on Model interface.
+ */
+class Elevator
+#if __cplusplus > 199711L
+    final
+#endif /* __cplusplus > 199711L */
+    : public Model {
+private:
+  /** Wrapped C-based elevator */
+  rrosace_elevator_t *p_elevator;
+
+public:
+  /** Default elevator frequency */
+  static const int DEFAULT_FREQ = RROSACE_ELEVATOR_DEFAULT_FREQ;
+
+  /**
+   * @brief Elevator constructor
+   * @param[in] omega The elevator omega parameter
+   * @param[in] xi The elevator xi parameter
+   */
+  Elevator(double omega = OMEGA, double xi = XI)
+      : p_elevator(rrosace_elevator_new(omega, xi)) {}
+
+  /**
+   * @brief Elevator copy constructor
+   * @param[in] other another elevator to construct
+   */
+  Elevator(const Elevator &other)
+      : p_elevator(rrosace_elevator_copy(other.p_elevator)) {}
+
+  /**
+   * @brief Elevator copy assignement
+   * @param[in] other another elevator to construct
+   */
+  Elevator &operator=(const Elevator &other) {
+    p_elevator = rrosace_elevator_copy(other.p_elevator);
+    return *this;
+  }
+
+#if __cplusplus > 199711L
+
+  /**
+   * @brief Elevator move constructor
+   * @param[in] ' ' an elevator to move
+   */
+  Elevator(Elevator &&) = default;
+
+  /**
+   * @brief Elevator move assignement
+   * @param[in] ' ' an elevator to move
+   */
+  Elevator &operator=(Elevator &&) = default;
+
+#endif /* __cplusplus > 199711L */
+
+  /**
+   * @brief Elevator destructor
+   */
+  ~Elevator() { rrosace_elevator_del(p_elevator); }
+
+  /**
+   * @brief Execute an elevator model instance
+   * @param[in] delta_e_c The elevator deflection commanded
+   * @param[out] delta_e The simulated elevator deflection
+   * @param[in] dt The model instance execution period, 1 / DEFAULT_FREQ by
+   * default
+   * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
+   */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  int step(double delta_e_c, double &delta_e, double dt = 1 / DEFAULT_FREQ) {
+    return rrosace_elevator_step(p_elevator, delta_e_c, &delta_e, dt);
+  }
+};
+} /* namespace RROSACE */
 }
 #endif /* __cplusplus */
 

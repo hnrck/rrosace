@@ -21,6 +21,13 @@
 #include <rrosace_constants.h>
 
 #ifdef __cplusplus
+
+#if __cplusplus <= 199711L
+#ifndef nullptr
+#define nullptr NULL
+#endif /* nullptr */
+#endif /* __cplusplus <= 199711L */
+
 namespace RROSACE {
 class Model {};
 } /* namespace RROSACE */

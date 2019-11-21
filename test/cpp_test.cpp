@@ -31,9 +31,12 @@ auto main() -> int {
   bool ret = true;
 
   // Elevator
-  ret &= ((&rrosace_elevator_new) != nullptr);
-  ret &= ((&rrosace_elevator_del) != nullptr);
-  ret &= ((&rrosace_elevator_step) != nullptr);
+  {
+    double delta_e;
+
+    RROSACE::Elevator elevator = RROSACE::Elevator(RROSACE::OMEGA, RROSACE::XI);
+    (void)elevator.step(RROSACE::DELTA_E_C_EQ, delta_e);
+  }
 
   // Engine
   ret &= ((&rrosace_engine_new) != nullptr);

@@ -46,6 +46,20 @@ out:
   return (p_elevator);
 }
 
+rrosace_elevator_t *rrosace_elevator_copy(rrosace_elevator_t *p_other) {
+  rrosace_elevator_t *p_elevator =
+      rrosace_elevator_new(p_other->omega, p_other->xi);
+
+  if (!p_elevator) {
+    goto out;
+  }
+
+  p_elevator->x[0] = p_other->x[0];
+  p_elevator->x[1] = p_other->x[1];
+out:
+  return (p_elevator);
+}
+
 void rrosace_elevator_del(rrosace_elevator_t *p_elevator) {
   if (p_elevator) {
     free(p_elevator);
