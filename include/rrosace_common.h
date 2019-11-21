@@ -1,0 +1,29 @@
+/**
+ * @file rrosace_common.h
+ * @brief RROSACE common header.
+ * @author Henrick Deschamps
+ * @version 1.0.0
+ * @date 2019-11-17
+ *
+ * Based on the Open Source ROSACE (Research Open-Source Avionics and Control
+ * Engineering) case study.
+ * Implementations of ROSACE available at:
+ * https://svn.onera.fr/schedmcore/branches/ROSACE_CaseStudy/
+ * Publication of ROSACE available at:
+ * https://oatao.univ-toulouse.fr/11522/1/Siron_11522.pdf
+ * Publication of RROSACE available at:
+ * https://svn.onera.fr/schedmcore/branches/ROSACE_CaseStudy/redundant/report_redundant_rosace_matlab.pdf
+ */
+
+#ifndef RROSACE_COMMON_H
+#define RROSACE_COMMON_H
+
+#include <rrosace_constants.h>
+
+#ifdef __cplusplus
+namespace RROSACE {
+class Model {};
+} /* namespace RROSACE */
+#endif /* __cplusplus */
+
+#endif /* RROSACE_COMMON_H */

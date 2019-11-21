@@ -173,6 +173,7 @@ set(RROSACE_INC
         ${CMAKE_SOURCE_DIR}/include/rrosace_fcc.h
         ${CMAKE_SOURCE_DIR}/include/rrosace_cables.h
         ${CMAKE_SOURCE_DIR}/include/rrosace_constants.h
+        ${CMAKE_SOURCE_DIR}/include/rrosace_common.h
         )
 
 # Path configuration for SEAPlanes.
