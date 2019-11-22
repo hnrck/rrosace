@@ -29,7 +29,17 @@
 #endif /* __cplusplus <= 199711L */
 
 namespace RROSACE {
-class Model {};
+class Model {
+public:
+  virtual ~Model()
+#if __cplusplus <= 199711L
+      {};
+#else
+      = default;
+#endif /* __cplusplus <= 199711L */
+  virtual int step() = 0;
+};
+
 } /* namespace RROSACE */
 #endif /* __cplusplus */
 

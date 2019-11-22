@@ -93,6 +93,10 @@ private:
   /** Wrapped C-based elevator */
   rrosace_elevator_t *p_elevator;
 
+  double &r_delta_e_c;
+  double &r_delta_e;
+  double m_dt;
+
 public:
   /** Default elevator frequency */
   static const int DEFAULT_FREQ = RROSACE_ELEVATOR_DEFAULT_FREQ;
@@ -101,16 +105,24 @@ public:
    * @brief Elevator constructor
    * @param[in] omega The elevator omega parameter
    * @param[in] xi The elevator xi parameter
+   * @param[in] delta_e_c The elevator deflection commanded
+   * @param[out] delta_e The simulated elevator deflection
+   * @param[in] dt The model instance execution period, 1 / DEFAULT_FREQ by
+   * default
    */
-  Elevator(double omega = OMEGA, double xi = XI)
-      : p_elevator(rrosace_elevator_new(omega, xi)) {}
+  Elevator(double omega, double xi, double &delta_e_c, double &delta_e,
+           double dt = 1 / DEFAULT_FREQ)
+      : p_elevator(rrosace_elevator_new(omega, xi)), r_delta_e_c(delta_e_c),
+        r_delta_e(delta_e), m_dt(dt) {}
 
   /**
    * @brief Elevator copy constructor
    * @param[in] other another elevator to construct
    */
   Elevator(const Elevator &other)
-      : p_elevator(rrosace_elevator_copy(other.p_elevator)) {}
+      : p_elevator(rrosace_elevator_copy(other.p_elevator)),
+        r_delta_e_c(other.r_delta_e_c), r_delta_e(other.r_delta_e),
+        m_dt(other.m_dt) {}
 
   /**
    * @brief Elevator copy assignement
@@ -144,17 +156,13 @@ public:
 
   /**
    * @brief Execute an elevator model instance
-   * @param[in] delta_e_c The elevator deflection commanded
-   * @param[out] delta_e The simulated elevator deflection
-   * @param[in] dt The model instance execution period, 1 / DEFAULT_FREQ by
-   * default
    * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
    */
 #if __cplusplus >= 201703L
   [[nodiscard]]
 #endif
-  int step(double delta_e_c, double &delta_e, double dt = 1 / DEFAULT_FREQ) {
-    return rrosace_elevator_step(p_elevator, delta_e_c, &delta_e, dt);
+  int step() {
+    return rrosace_elevator_step(p_elevator, r_delta_e_c, &r_delta_e, m_dt);
   }
 };
 } /* namespace RROSACE */

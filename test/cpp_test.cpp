@@ -32,18 +32,31 @@ auto main() -> int {
 
   // Elevator
   {
+    double delta_e_c = RROSACE::DELTA_E_C_EQ;
     double delta_e;
 
-    RROSACE::Elevator elevator = RROSACE::Elevator(RROSACE::OMEGA, RROSACE::XI);
-    (void)elevator.step(RROSACE::DELTA_E_C_EQ, delta_e);
+    std::cout << "Elevator test" << std::endl;
+
+    RROSACE::Elevator elevator =
+        RROSACE::Elevator(RROSACE::OMEGA, RROSACE::XI, delta_e_c, delta_e);
+    (void)elevator.step();
+
+    std::cout << "delta_e: " << RROSACE::DELTA_E_EQ << " -> " << delta_e
+              << std::endl;
   }
 
   // Engine
   {
+    double delta_th_c = RROSACE_DELTA_TH_C_EQ;
     double t;
 
-    RROSACE::Engine engine = RROSACE::Engine(RROSACE::TAU);
-    (void)engine.step(RROSACE::DELTA_E_C_EQ, t);
+    std::cout << "Engine test" << std::endl;
+
+    RROSACE::Engine engine = RROSACE::Engine(RROSACE::TAU, delta_th_c, t);
+
+    (void)engine.step();
+
+    std::cout << "t: " << RROSACE::T_EQ << " -> " << t << std::endl;
   }
 
   // FCCs

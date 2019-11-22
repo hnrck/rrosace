@@ -90,6 +90,10 @@ private:
   /** Wrapped C-based elevator */
   rrosace_engine_t *p_engine; /**< C-struct engine wrapped */
 
+  double &r_delta_th_c;
+  double &r_t;
+  double m_dt;
+
 public:
   /** Default elevator frequency */
   static const int DEFAULT_FREQ = RROSACE_ENGINE_DEFAULT_FREQ;
@@ -97,14 +101,23 @@ public:
   /**
    * @brief Elevator constructor
    * @param[in] tau The engine tau parameter
+   * @param[in] delta_th_c The commanded delta throttle
+   * @param[out] t The simulated thrust
+   * @param[in] dt The execution period of the engine model instance, default 1
+   * / DEFAULT_FREQ
    */
-  explicit Engine(double tau) : p_engine(rrosace_engine_new(tau)) {}
+  Engine(double tau, double &delta_th_c, double &t,
+         double dt = 1. / DEFAULT_FREQ)
+      : p_engine(rrosace_engine_new(tau)), r_delta_th_c(delta_th_c), r_t(t),
+        m_dt(dt) {}
 
   /**
    * @brief Elevator copy constructor
    * @param[in] other another elevator to construct
    */
-  Engine(const Engine &other) : p_engine(rrosace_engine_copy(other.p_engine)) {}
+  Engine(const Engine &other)
+      : p_engine(rrosace_engine_copy(other.p_engine)),
+        r_delta_th_c(other.r_delta_th_c), r_t(other.r_t), m_dt(other.m_dt) {}
 
   /**
    * @brief Elevator copy assignement
@@ -138,21 +151,16 @@ public:
 
 /**
  * @brief  Execute an engine model instance
- * @param[in] delta_th_c The commanded delta throttle
- * @param[out] t The simulated thrust
- * @param[in] dt The execution period of the engine model instance, default 1 /
- * DEFAULT_FREQ
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
  */
 #if __cplusplus >= 201703L
   [[nodiscard]]
 #endif
-  int step(double delta_th_c, double &t, double dt = 1. / DEFAULT_FREQ) {
-    return rrosace_engine_step(p_engine, delta_th_c, &t, dt);
+  int step() {
+    return rrosace_engine_step(p_engine, r_delta_th_c, &r_t, m_dt);
   }
 };
 } /* namespace RROSACE */
 } /* extern "C" */
 #endif /* __cplusplus */
-
 #endif /* RROSACE_ENGINE_H */
