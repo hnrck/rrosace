@@ -32,7 +32,7 @@ auto main() -> int {
 
   // Elevator
   {
-    double delta_e_c = RROSACE::DELTA_E_C_EQ;
+    const double delta_e_c = RROSACE::DELTA_E_C_EQ;
     double delta_e;
 
     std::cout << "Elevator test" << std::endl;
@@ -47,7 +47,7 @@ auto main() -> int {
 
   // Engine
   {
-    double delta_th_c = RROSACE_DELTA_TH_C_EQ;
+    const double delta_th_c = RROSACE_DELTA_TH_C_EQ;
     double t;
 
     std::cout << "Engine test" << std::endl;
@@ -61,7 +61,7 @@ auto main() -> int {
 
   // Flight dynmaics
   {
-    double delta_e = RROSACE::DELTA_E_EQ;
+    const double delta_e = RROSACE::DELTA_E_EQ;
     double t = RROSACE::T_EQ;
 
     double h;

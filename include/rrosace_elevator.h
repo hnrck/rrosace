@@ -93,8 +93,10 @@ private:
   /** Wrapped C-based elevator */
   rrosace_elevator_t *p_elevator;
 
-  double &r_delta_e_c;
+  const double &r_delta_e_c;
+
   double &r_delta_e;
+
   double m_dt;
 
 public:
@@ -110,7 +112,7 @@ public:
    * @param[in] dt The model instance execution period, 1 / DEFAULT_FREQ by
    * default
    */
-  Elevator(double omega, double xi, double &delta_e_c, double &delta_e,
+  Elevator(double omega, double xi, const double &delta_e_c, double &delta_e,
            double dt = 1 / DEFAULT_FREQ)
       : p_elevator(rrosace_elevator_new(omega, xi)), r_delta_e_c(delta_e_c),
         r_delta_e(delta_e), m_dt(dt) {}

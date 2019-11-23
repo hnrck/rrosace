@@ -90,7 +90,7 @@ private:
   /** Wrapped C-based elevator */
   rrosace_engine_t *p_engine; /**< C-struct engine wrapped */
 
-  double &r_delta_th_c;
+  const double &r_delta_th_c;
   double &r_t;
   double m_dt;
 
@@ -106,7 +106,7 @@ public:
    * @param[in] dt The execution period of the engine model instance, default 1
    * / DEFAULT_FREQ
    */
-  Engine(double tau, double &delta_th_c, double &t,
+  Engine(double tau, const double &delta_th_c, double &t,
          double dt = 1. / DEFAULT_FREQ)
       : p_engine(rrosace_engine_new(tau)), r_delta_th_c(delta_th_c), r_t(t),
         m_dt(dt) {}
