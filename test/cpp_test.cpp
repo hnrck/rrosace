@@ -59,6 +59,31 @@ auto main() -> int {
     std::cout << "t: " << RROSACE::T_EQ << " -> " << t << std::endl;
   }
 
+  // Flight dynmaics
+  {
+    double delta_e = RROSACE::DELTA_E_EQ;
+    double t = RROSACE::T_EQ;
+
+    double h;
+    double vz;
+    double va;
+    double q;
+    double az;
+
+    std::cout << "Flight dynamics test" << std::endl;
+
+    RROSACE::FlightDynamics flight_dynamics =
+        RROSACE::FlightDynamics(delta_e, t, h, vz, va, q, az, t);
+
+    (void)flight_dynamics.step();
+
+    std::cout << "h: " << RROSACE::H_EQ << " -> " << h << std::endl;
+    std::cout << "vz: " << RROSACE::VZ_EQ << " -> " << vz << std::endl;
+    std::cout << "va: " << RROSACE::VA_EQ << " -> " << va << std::endl;
+    std::cout << "q: " << RROSACE::Q_EQ << " -> " << q << std::endl;
+    std::cout << "az: " << RROSACE::AZ_EQ << " -> " << az << std::endl;
+  }
+
   // FCCs
   ret &= ((&rrosace_fcc_new) != nullptr);
   ret &= ((&rrosace_fcc_del) != nullptr);
@@ -69,11 +94,6 @@ auto main() -> int {
   ret &= ((&rrosace_filter_new) != nullptr);
   ret &= ((&rrosace_filter_del) != nullptr);
   ret &= ((&rrosace_filter_step) != nullptr);
-
-  // Flight dynamics
-  ret &= ((&rrosace_flight_dynamics_new) != nullptr);
-  ret &= ((&rrosace_flight_dynamics_del) != nullptr);
-  ret &= ((&rrosace_flight_dynamics_step) != nullptr);
 
   // Flight mode
   ret &= ((&rrosace_flight_mode_new) != nullptr);
