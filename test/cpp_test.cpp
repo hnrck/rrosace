@@ -84,16 +84,48 @@ auto main() -> int {
     std::cout << "az: " << RROSACE::AZ_EQ << " -> " << az << std::endl;
   }
 
+  // Filters
+  {
+
+    const double h = RROSACE::H_EQ;
+    const double vz = RROSACE::VZ_EQ;
+    const double va = RROSACE::VA_EQ;
+    const double q = RROSACE::Q_EQ;
+    const double az = RROSACE::AZ_EQ;
+
+    double h_f;
+    double vz_f;
+    double va_f;
+    double q_f;
+    double az_f;
+
+    RROSACE::AltitudeFilter altitudeFilter = RROSACE::AltitudeFilter(h, h_f);
+    RROSACE::VerticalAirspeedFilter verticalAirspeedFilter =
+        RROSACE::VerticalAirspeedFilter(vz, vz_f);
+    RROSACE::TrueAirspeedFilter trueAirspeedFilter =
+        RROSACE::TrueAirspeedFilter(va, va_f);
+    RROSACE::PitchRateFilter pitchRateFilter = RROSACE::PitchRateFilter(q, q_f);
+    RROSACE::VerticalAccelerationFilter verticalAccelerationFilter =
+        RROSACE::VerticalAccelerationFilter(az, az_f);
+
+    altitudeFilter.step();
+    verticalAirspeedFilter.step();
+    trueAirspeedFilter.step();
+    pitchRateFilter.step();
+    verticalAccelerationFilter.step();
+
+    std::cout << "h_f: " << RROSACE::H_F_EQ << " -> " << h_f << std::endl;
+    std::cout << "vz_f: " << RROSACE::VZ_F_EQ << " -> " << vz_f << std::endl;
+    std::cout << "va_f: " << RROSACE::VA_F_EQ << " -> " << va_f << std::endl;
+    std::cout << "q_f: " << RROSACE::Q_F_EQ << " -> " << q_f << std::endl;
+    std::cout << "az_f: " << RROSACE::AZ_F_EQ << " -> " << az_f << std::endl;
+  }
+
   // FCCs
   ret &= ((&rrosace_fcc_new) != nullptr);
   ret &= ((&rrosace_fcc_del) != nullptr);
   ret &= ((&rrosace_fcc_com_step) != nullptr);
   ret &= ((&rrosace_fcc_mon_step) != nullptr);
-
-  // Filters
-  ret &= ((&rrosace_filter_new) != nullptr);
-  ret &= ((&rrosace_filter_del) != nullptr);
-  ret &= ((&rrosace_filter_step) != nullptr);
 
   // Flight mode
   ret &= ((&rrosace_flight_mode_new) != nullptr);

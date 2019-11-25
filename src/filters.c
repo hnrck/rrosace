@@ -341,6 +341,26 @@ out:
   return (p_filter);
 }
 
+rrosace_filter_t *rrosace_filter_copy(const rrosace_filter_t *p_other) {
+  rrosace_filter_t *p_filter =
+      (rrosace_filter_t *)calloc(1, sizeof(rrosace_filter_t));
+
+  if (!p_filter) {
+    goto out;
+  }
+
+  p_filter->as = p_other->as;
+  p_filter->bs = p_other->bs;
+  p_filter->selected_filter.second_order_filter.x[0] =
+      p_other->selected_filter.second_order_filter.x[0];
+  p_filter->selected_filter.second_order_filter.x[1] =
+      p_other->selected_filter.second_order_filter.x[1];
+  p_filter->filtering = p_other->filtering;
+
+out:
+  return (p_filter);
+}
+
 void rrosace_filter_del(rrosace_filter_t *p_filter) {
   if (p_filter) {
     free(p_filter);
