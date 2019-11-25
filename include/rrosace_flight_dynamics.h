@@ -46,7 +46,7 @@ rrosace_flight_dynamics_t *rrosace_flight_dynamics_new();
  * @return A new flight dynamics
  */
 rrosace_flight_dynamics_t *
-rrosace_flight_dynamics_copy(rrosace_flight_dynamics_t *p_other);
+rrosace_flight_dynamics_copy(const rrosace_flight_dynamics_t *p_other);
 
 /**
  * @brief Destroy a flight dynamics model

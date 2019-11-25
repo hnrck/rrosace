@@ -42,7 +42,7 @@ out:
   return (p_engine);
 }
 
-rrosace_engine_t *rrosace_engine_copy(rrosace_engine_t *p_other) {
+rrosace_engine_t *rrosace_engine_copy(const rrosace_engine_t *p_other) {
   rrosace_engine_t *p_engine = rrosace_engine_new(p_other->tau);
 
   if (!p_engine) {

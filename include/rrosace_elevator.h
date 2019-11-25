@@ -53,7 +53,7 @@ rrosace_elevator_t *rrosace_elevator_new(double omega, double xi);
  * @param[in] p_other the elevator to copy
  * @return A new elevator
  */
-rrosace_elevator_t *rrosace_elevator_copy(rrosace_elevator_t *p_other);
+rrosace_elevator_t *rrosace_elevator_copy(const rrosace_elevator_t *p_other);
 
 /**
  * @brief Destroy an elevator
@@ -73,6 +73,7 @@ int rrosace_elevator_step(rrosace_elevator_t *p_elevator, double delta_e_c,
                           double *p_delta_e, double dt);
 
 #ifdef __cplusplus
+}
 namespace RROSACE {
 
 /** Elevator default parameter omega */
@@ -168,7 +169,6 @@ public:
   }
 };
 } /* namespace RROSACE */
-}
 #endif /* __cplusplus */
 
 #endif /* RROSACE_ELEVATOR_H */

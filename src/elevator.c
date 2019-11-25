@@ -46,7 +46,7 @@ out:
   return (p_elevator);
 }
 
-rrosace_elevator_t *rrosace_elevator_copy(rrosace_elevator_t *p_other) {
+rrosace_elevator_t *rrosace_elevator_copy(const rrosace_elevator_t *p_other) {
   rrosace_elevator_t *p_elevator =
       rrosace_elevator_new(p_other->omega, p_other->xi);
 

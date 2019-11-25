@@ -53,7 +53,7 @@ rrosace_engine_t *rrosace_engine_new(double tau);
  * @param[in] p_other the engine to copy
  * @return A new engine
  */
-rrosace_engine_t *rrosace_engine_copy(rrosace_engine_t *p_other);
+rrosace_engine_t *rrosace_engine_copy(const rrosace_engine_t *p_other);
 
 /**
  * @brief Destroy an engine
@@ -73,6 +73,7 @@ int rrosace_engine_step(rrosace_engine_t *p_engine, double delta_th_c,
                         double *p_t, double dt);
 
 #ifdef __cplusplus
+} /* extern "C" */
 namespace RROSACE {
 
 /** Engine default parameter tau */
@@ -161,6 +162,5 @@ public:
   }
 };
 } /* namespace RROSACE */
-} /* extern "C" */
 #endif /* __cplusplus */
 #endif /* RROSACE_ENGINE_H */

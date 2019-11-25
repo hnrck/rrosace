@@ -77,8 +77,8 @@ out:
   return (p_flight_dynamics);
 }
 
-
-rrosace_flight_dynamics_t *rrosace_flight_dynamics_copy(rrosace_flight_dynamics_t *p_other) {
+rrosace_flight_dynamics_t *
+rrosace_flight_dynamics_copy(const rrosace_flight_dynamics_t *p_other) {
   rrosace_flight_dynamics_t *p_flight_dynamics = rrosace_flight_dynamics_new();
 
   if (!p_flight_dynamics) {
@@ -91,7 +91,7 @@ rrosace_flight_dynamics_t *rrosace_flight_dynamics_copy(rrosace_flight_dynamics_
   p_flight_dynamics->theta = p_other->theta;
   p_flight_dynamics->h = p_other->h;
 
-  out:
+out:
   return (p_flight_dynamics);
 }
 
