@@ -306,6 +306,26 @@ out:
   return (p_fcc);
 }
 
+rrosace_fcc_t *rrosace_fcc_copy(const rrosace_fcc_t *p_other) {
+  rrosace_fcc_t *p_fcc = rrosace_fcc_new();
+
+  if (!p_fcc) {
+    goto out;
+  }
+
+  p_fcc->altitude_hold.controller.integrator =
+      p_other->altitude_hold.controller.integrator;
+  p_fcc->altitude_hold.need_reinit = p_other->altitude_hold.need_reinit;
+  p_fcc->altitude_hold.old_vz_c = p_other->altitude_hold.old_vz_c;
+
+  p_fcc->va_control.integrator = p_other->va_control.integrator;
+
+  p_fcc->vz_control.integrator = p_other->vz_control.integrator;
+
+out:
+  return (p_fcc);
+}
+
 void rrosace_fcc_del(rrosace_fcc_t *p_fcc) {
   if (p_fcc) {
     free(p_fcc);

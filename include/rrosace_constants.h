@@ -143,6 +143,8 @@ static const int MASTER_IN_LAW = RROSACE_MASTER_IN_LAW;
 /** Is not master in law */
 static const int NOT_MASTER_IN_LAW = RROSACE_NOT_MASTER_IN_LAW;
 
+typedef enum rrosace_relay_state RelayState;
+typedef enum rrosace_master_in_law MasterInLaw;
 } /* namespace RROSACE */
 #endif /* __cplusplus */
 

@@ -123,7 +123,8 @@ auto main() -> int {
 
   // Flight mode
   {
-    const RROSACE::FlightMode::Mode mode_in = RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
+    const RROSACE::FlightMode::Mode mode_in =
+        RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
     RROSACE::FlightMode::Mode mode_out;
 
     std::cout << "Flight mode test" << std::endl;
@@ -132,7 +133,8 @@ auto main() -> int {
 
     (void)flight_mode.step();
 
-    std::cout << "mode: " << RROSACE::FlightMode::Mode::RROSACE_COMMANDED << " -> " << mode_out << std::endl;
+    std::cout << "mode: " << RROSACE::FlightMode::Mode::RROSACE_COMMANDED
+              << " -> " << mode_out << std::endl;
   }
 
   // FCU
@@ -146,7 +148,8 @@ auto main() -> int {
 
     std::cout << "FCU test" << std::endl;
 
-    RROSACE::FlightControlUnit fcu = RROSACE::FlightControlUnit(h_c_in, vz_c_in, va_c_in, h_c_out, vz_c_out, va_c_out);
+    RROSACE::FlightControlUnit fcu = RROSACE::FlightControlUnit(
+        h_c_in, vz_c_in, va_c_in, h_c_out, vz_c_out, va_c_out);
 
     (void)fcu.step();
 
@@ -156,10 +159,50 @@ auto main() -> int {
   }
 
   // FCCs
-  ret &= ((&rrosace_fcc_new) != nullptr);
-  ret &= ((&rrosace_fcc_del) != nullptr);
-  ret &= ((&rrosace_fcc_com_step) != nullptr);
-  ret &= ((&rrosace_fcc_mon_step) != nullptr);
+  {
+    const RROSACE::FlightMode::Mode mode =
+        RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
+
+    const double h = RROSACE::H_EQ;
+    const double vz = RROSACE::VZ_EQ;
+    const double va = RROSACE::VA_EQ;
+    const double q = RROSACE::Q_EQ;
+    const double az = RROSACE::AZ_EQ;
+
+    const double h_c = RROSACE::H_EQ;
+    const double vz_c = RROSACE::VZ_EQ;
+    const double va_c = RROSACE::VA_EQ;
+
+    double delta_e_c;
+    double delta_th_c;
+
+    const RROSACE::MasterInLaw &other_master_in_law =
+        RROSACE::MasterInLaw::RROSACE_NOT_MASTER_IN_LAW;
+
+    RROSACE::RelayState relay_delta_e_c;
+    RROSACE::RelayState relay_delta_th_c;
+    RROSACE::MasterInLaw master_in_law;
+
+    std::cout << "FCC test" << std::endl;
+
+    RROSACE::FlightControlComputer flightControlComputerCommand =
+        RROSACE::FlightControlComputer(mode, h, vz, va, q, az, h_c, vz_c, va_c,
+                                       delta_e_c, delta_th_c);
+    RROSACE::FlightControlComputer flightControlComputerMonitor =
+        RROSACE::FlightControlComputer(mode, h, vz, va, q, az, h_c, vz_c, va_c,
+                                       delta_e_c, delta_th_c,
+                                       other_master_in_law, relay_delta_e_c,
+                                       relay_delta_th_c, master_in_law);
+
+    (void)flightControlComputerCommand.step();
+    (void)flightControlComputerMonitor.step();
+
+    std::cout << "delta_e_c: " << RROSACE::DELTA_E_C_EQ << " -> " << delta_e_c << std::endl;
+    std::cout << "delta_th_c: " << RROSACE::DELTA_TH_C_EQ << " -> " << delta_th_c << std::endl;
+    std::cout << "relay_delta_e_c: " << RROSACE::RelayState::RROSACE_RELAY_CLOSED << " ->" << relay_delta_e_c << std::endl;
+    std::cout << "relay_delta_th_c: " << RROSACE::RelayState::RROSACE_RELAY_CLOSED << " -> " << relay_delta_th_c << std::endl;
+    std::cout << "master_in_law: " << RROSACE::MasterInLaw::RROSACE_MASTER_IN_LAW << " -> " << master_in_law << std::endl;
+  }
 
   std::cout << "...OK" << std::endl;
 
