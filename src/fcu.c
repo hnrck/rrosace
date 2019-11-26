@@ -41,6 +41,21 @@ out:
   return (p_fcu);
 }
 
+rrosace_fcu_t *rrosace_fcu_copy(const rrosace_fcu_t *p_other) {
+  rrosace_fcu_t *p_fcu = rrosace_fcu_new();
+
+  if (!p_fcu) {
+    goto out;
+  }
+
+  p_fcu->h_c = p_other->h_c;
+  p_fcu->va_c = p_other->va_c;
+  p_fcu->vz_c = p_other->vz_c;
+
+out:
+  return (p_fcu);
+}
+
 void rrosace_fcu_del(rrosace_fcu_t *p_fcu) {
   if (p_fcu) {
     free(p_fcu);

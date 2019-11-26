@@ -39,6 +39,20 @@ out:
   return (p_flight_mode);
 }
 
+rrosace_flight_mode_t *
+rrosace_flight_mode_copy(const rrosace_flight_mode_t *p_other) {
+  rrosace_flight_mode_t *p_flight_mode = rrosace_flight_mode_new();
+
+  if (!p_flight_mode) {
+    goto out;
+  }
+
+  p_flight_mode->mode = p_other->mode;
+
+out:
+  return (p_flight_mode);
+}
+
 void rrosace_flight_mode_del(rrosace_flight_mode_t *p_flight_mode) {
   if (p_flight_mode) {
     free(p_flight_mode);

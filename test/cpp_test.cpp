@@ -108,11 +108,11 @@ auto main() -> int {
     RROSACE::VerticalAccelerationFilter verticalAccelerationFilter =
         RROSACE::VerticalAccelerationFilter(az, az_f);
 
-    altitudeFilter.step();
-    verticalAirspeedFilter.step();
-    trueAirspeedFilter.step();
-    pitchRateFilter.step();
-    verticalAccelerationFilter.step();
+    (void)altitudeFilter.step();
+    (void)verticalAirspeedFilter.step();
+    (void)trueAirspeedFilter.step();
+    (void)pitchRateFilter.step();
+    (void)verticalAccelerationFilter.step();
 
     std::cout << "h_f: " << RROSACE::H_F_EQ << " -> " << h_f << std::endl;
     std::cout << "vz_f: " << RROSACE::VZ_F_EQ << " -> " << vz_f << std::endl;
@@ -121,17 +121,45 @@ auto main() -> int {
     std::cout << "az_f: " << RROSACE::AZ_F_EQ << " -> " << az_f << std::endl;
   }
 
+  // Flight mode
+  {
+    const RROSACE::FlightMode::Mode mode_in = RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
+    RROSACE::FlightMode::Mode mode_out;
+
+    std::cout << "Flight mode test" << std::endl;
+
+    RROSACE::FlightMode flight_mode = RROSACE::FlightMode(mode_in, mode_out);
+
+    (void)flight_mode.step();
+
+    std::cout << "mode: " << RROSACE::FlightMode::Mode::RROSACE_COMMANDED << " -> " << mode_out << std::endl;
+  }
+
+  // FCU
+  {
+    const double h_c_in = RROSACE::H_EQ;
+    const double vz_c_in = RROSACE::VZ_EQ;
+    const double va_c_in = RROSACE::VA_EQ;
+    double h_c_out;
+    double vz_c_out;
+    double va_c_out;
+
+    std::cout << "FCU test" << std::endl;
+
+    RROSACE::FlightControlUnit fcu = RROSACE::FlightControlUnit(h_c_in, vz_c_in, va_c_in, h_c_out, vz_c_out, va_c_out);
+
+    (void)fcu.step();
+
+    std::cout << "h_c: " << RROSACE::H_EQ << " -> " << h_c_out << std::endl;
+    std::cout << "vz_c: " << RROSACE::VZ_EQ << " -> " << vz_c_out << std::endl;
+    std::cout << "va_c: " << RROSACE::VA_EQ << " -> " << va_c_out << std::endl;
+  }
+
   // FCCs
   ret &= ((&rrosace_fcc_new) != nullptr);
   ret &= ((&rrosace_fcc_del) != nullptr);
   ret &= ((&rrosace_fcc_com_step) != nullptr);
   ret &= ((&rrosace_fcc_mon_step) != nullptr);
-
-  // Flight mode
-  ret &= ((&rrosace_flight_mode_new) != nullptr);
-  ret &= ((&rrosace_flight_mode_del) != nullptr);
-  ret &= ((&rrosace_flight_mode_set_mode) != nullptr);
-  ret &= ((&rrosace_flight_mode_get_mode) != nullptr);
 
   std::cout << "...OK" << std::endl;
 
