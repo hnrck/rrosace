@@ -134,7 +134,7 @@ private:
   double &r_delta_e_c;
   double &r_delta_th_c;
 
-  const double &r_dt;
+  double m_dt;
 
 public:
   /**
@@ -150,7 +150,7 @@ public:
                                double &delta_th_c, const double &dt)
       : p_fcc(rrosace_fcc_new()), r_mode(mode), r_h(h), r_vz(vz), r_va(va),
         r_q(q), r_az(az), r_h_c(h_c), r_vz_c(vz_c), r_va_c(va_c),
-        r_delta_e_c(delta_e_c), r_delta_th_c(delta_th_c), r_dt(dt) {}
+        r_delta_e_c(delta_e_c), r_delta_th_c(delta_th_c), m_dt(dt) {}
 
   /**
    * @brief Flight control computer copy constructor
@@ -161,7 +161,7 @@ public:
         r_h(other.r_h), r_vz(other.r_vz), r_va(other.r_va), r_q(other.r_q),
         r_az(other.r_az), r_h_c(other.r_h_c), r_vz_c(other.r_vz_c),
         r_va_c(other.r_va_c), r_delta_e_c(other.r_delta_e_c),
-        r_delta_th_c(other.r_delta_th_c), r_dt(other.r_dt) {}
+        r_delta_th_c(other.r_delta_th_c), m_dt(other.m_dt) {}
 
   /**
    * @brief Flight control computer copy assignement
@@ -186,7 +186,7 @@ public:
    * @param[in] ' ' an flight control computer to move
    */
   FlightControlComputerCommand &
-  operator=(FlightControlComputerCommand &&) = default;
+  operator=(FlightControlComputerCommand &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -205,7 +205,19 @@ public:
   int step() {
     return rrosace_fcc_com_step(p_fcc, r_mode, r_h, r_vz, r_va, r_q, r_az,
                                 r_h_c, r_vz_c, r_va_c, &r_delta_e_c,
-                                &r_delta_th_c, r_dt);
+                                &r_delta_th_c, m_dt);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 
@@ -239,7 +251,7 @@ private:
   RelayState &r_relay_delta_th_c;
   MasterInLaw &r_master_in_law;
 
-  const double r_dt;
+  double m_dt;
 
 public:
   /**
@@ -253,14 +265,14 @@ public:
       const double &vz_c, const double &va_c, const double &delta_e_c,
       const double &delta_th_c, const MasterInLaw &other_master_in_law,
       RelayState &relay_delta_e_c, RelayState &relay_delta_th_c,
-      MasterInLaw &master_in_law, const double &dt)
+      MasterInLaw &master_in_law, double dt)
       : p_fcc(rrosace_fcc_new()), r_mode(mode), r_h(h), r_vz(vz), r_va(va),
         r_q(q), r_az(az), r_h_c(h_c), r_vz_c(vz_c), r_va_c(va_c),
         r_delta_e_c(delta_e_c), r_delta_th_c(delta_th_c),
         r_other_master_in_law(other_master_in_law),
         r_relay_delta_e_c(relay_delta_e_c),
         r_relay_delta_th_c(relay_delta_th_c), r_master_in_law(master_in_law),
-        r_dt(dt) {}
+        m_dt(dt) {}
 
   /**
    * @brief Flight control computer copy constructor
@@ -275,7 +287,7 @@ public:
         r_other_master_in_law(other.r_other_master_in_law),
         r_relay_delta_e_c(other.r_relay_delta_e_c),
         r_relay_delta_th_c(other.r_relay_delta_th_c),
-        r_master_in_law(other.r_master_in_law), r_dt(other.r_dt) {}
+        r_master_in_law(other.r_master_in_law), m_dt(other.m_dt) {}
 
   /**
    * @brief Flight control computer copy assignement
@@ -300,7 +312,7 @@ public:
    * @param[in] ' ' an flight control computer to move
    */
   FlightControlComputerMonitor &
-  operator=(FlightControlComputerMonitor &&) = default;
+  operator=(FlightControlComputerMonitor &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -320,7 +332,19 @@ public:
     return rrosace_fcc_mon_step(
         p_fcc, r_mode, r_h, r_vz, r_va, r_q, r_az, r_h_c, r_vz_c, r_va_c,
         r_delta_e_c, r_delta_th_c, r_other_master_in_law, &r_relay_delta_e_c,
-        &r_relay_delta_th_c, &r_master_in_law, r_dt);
+        &r_relay_delta_th_c, &r_master_in_law, m_dt);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 
@@ -352,9 +376,9 @@ public:
                         const double &az, const double &h_c, const double &vz_c,
                         const double &va_c, double &delta_e_c,
                         double &delta_th_c, double dt = 1. / DEFAULT_FREQ)
-      : p_flight_control_computer(new FlightControlComputerCommand(
-            mode, h, vz, va, q, az, h_c, vz_c, va_c, delta_e_c, delta_th_c,
-            m_dt)),
+      : p_flight_control_computer(
+            new FlightControlComputerCommand(mode, h, vz, va, q, az, h_c, vz_c,
+                                             va_c, delta_e_c, delta_th_c, dt)),
         m_dt(dt) {}
 
   /**
@@ -372,7 +396,7 @@ public:
       : p_flight_control_computer(new FlightControlComputerMonitor(
             mode, h, vz, va, q, az, h_c, vz_c, va_c, delta_e_c, delta_th_c,
             other_master_in_law, relay_delta_e_c, relay_delta_th_c,
-            master_in_law, m_dt)),
+            master_in_law, dt)),
         m_dt(dt) {}
 
   /**
@@ -405,7 +429,7 @@ public:
    * @brief Flight control computer move assignement
    * @param[in] ' ' an flight control computer to move
    */
-  FlightControlComputer &operator=(FlightControlComputer &&) = default;
+  FlightControlComputer &operator=(FlightControlComputer &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -423,6 +447,18 @@ public:
 #endif
   int step() {
     return p_flight_control_computer->step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return p_flight_control_computer->get_dt();
   }
 };
 } /* namespace RROSACE */

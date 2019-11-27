@@ -109,16 +109,20 @@ private:
   const double &r_value;
   double &r_filtered_value;
 
+  double m_dt;
+
 public:
   /**
    * @brief Filter constructor
    * @param[in,out] p_filter a filter
    * @param[in] value the value to filter
    * @param[out] filtered_value the value filtered
+   * @param[in] f the filter frequency
    */
   Filter(rrosace_filter_t *p_filter, const double &value,
-         double &filtered_value)
-      : p_filter(p_filter), r_value(value), r_filtered_value(filtered_value) {}
+         double &filtered_value, double f)
+      : p_filter(p_filter), r_value(value), r_filtered_value(filtered_value),
+        m_dt(1. / f) {}
 
   /**
    * @brief Filter copy constructor
@@ -126,7 +130,7 @@ public:
    */
   Filter(const Filter &other)
       : p_filter(rrosace_filter_copy(other.p_filter)), r_value(other.r_value),
-        r_filtered_value(other.r_filtered_value) {}
+        r_filtered_value(other.r_filtered_value), m_dt(other.m_dt) {}
 
   /**
    * @brief Filter copy assignement
@@ -149,7 +153,7 @@ public:
    * @brief Filter move assignement
    * @param[in] ' ' an filter to move
    */
-  Filter &operator=(Filter &&) = default;
+  Filter &operator=(Filter &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -167,6 +171,18 @@ public:
 #endif
   int step() {
     return rrosace_filter_step(p_filter, r_value, &r_filtered_value);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 
@@ -191,7 +207,7 @@ public:
    */
   AltitudeFilter(const double &h, double &h_f,
                  rrosace_filter_frequency f = RROSACE_FILTER_FREQ_50HZ)
-      : filter(rrosace_filter_new(RROSACE_ALTITUDE_FILTER, f), h, h_f) {}
+      : filter(rrosace_filter_new(RROSACE_ALTITUDE_FILTER, f), h, h_f, f) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -201,6 +217,18 @@ public:
 #endif
   int step() {
     return filter.step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return filter.get_dt();
   }
 };
 
@@ -226,7 +254,7 @@ public:
   VerticalAirspeedFilter(const double &vz, double &vz_f,
                          rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_VERTICAL_AIRSPEED_FILTER, f), vz,
-               vz_f) {}
+               vz_f, f) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -236,6 +264,18 @@ public:
 #endif
   int step() {
     return filter.step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return filter.get_dt();
   }
 };
 
@@ -259,7 +299,7 @@ public:
    */
   TrueAirspeedFilter(const double &va, double &va_f,
                      rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
-      : filter(rrosace_filter_new(RROSACE_TRUE_AIRSPEED_FILTER, f), va, va_f) {}
+      : filter(rrosace_filter_new(RROSACE_TRUE_AIRSPEED_FILTER, f), va, va_f, f) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -269,6 +309,18 @@ public:
 #endif
   int step() {
     return filter.step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return filter.get_dt();
   }
 };
 
@@ -292,7 +344,8 @@ public:
    */
   PitchRateFilter(const double &q, double &q_f,
                   rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
-      : filter(rrosace_filter_new(RROSACE_PITCH_RATE_FILTER, f), q, q_f) {}
+      : filter(rrosace_filter_new(RROSACE_PITCH_RATE_FILTER, f), q, q_f,
+               f) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -302,6 +355,18 @@ public:
 #endif
   int step() {
     return filter.step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return filter.get_dt();
   }
 };
 
@@ -328,7 +393,7 @@ public:
       const double &az, double &az_f,
       rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_VERTICAL_ACCELERATION_FILTER, f), az,
-               az_f) {}
+               az_f, f) {}
 
 /**
  * @brief  Execute a filter model instance
@@ -339,6 +404,18 @@ public:
 #endif
   int step() {
     return filter.step();
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return filter.get_dt();
   }
 };
 

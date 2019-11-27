@@ -148,7 +148,7 @@ public:
    * @brief Elevator move assignement
    * @param[in] ' ' an elevator to move
    */
-  Elevator &operator=(Elevator &&) = default;
+  Elevator &operator=(Elevator &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -166,6 +166,18 @@ public:
 #endif
   int step() {
     return rrosace_elevator_step(p_elevator, r_delta_e_c, &r_delta_e, m_dt);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 } /* namespace RROSACE */

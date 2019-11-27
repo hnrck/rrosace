@@ -38,6 +38,7 @@ public:
       = default;
 #endif /* __cplusplus <= 199711L */
   virtual int step() = 0;
+  virtual double get_dt() const = 0;
 };
 
 } /* namespace RROSACE */

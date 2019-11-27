@@ -94,7 +94,7 @@ class FlightMode
     : public Model {
 public:
   /** @typedef Alias for mode */
-  typedef enum rrosace_mode Mode;
+  typedef rrosace_mode_t Mode;
 
 private:
   /** Wrapped C-based flight mode */
@@ -149,7 +149,7 @@ public:
    * @brief Flight mode move assignement
    * @param[in] ' ' an flight mode to move
    */
-  FlightMode &operator=(FlightMode &&) = default;
+  FlightMode &operator=(FlightMode &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -169,6 +169,18 @@ public:
     rrosace_flight_mode_set_mode(p_flight_mode, r_mode_in);
     r_mode_out = rrosace_flight_mode_get_mode(p_flight_mode);
     return (r_mode_in == r_mode_out ? EXIT_SUCCESS : EXIT_FAILURE);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 } /* namespace RROSACE */

@@ -20,6 +20,9 @@
 #define RROSACE_FCU_H
 
 #include <rrosace_constants.h>
+#ifdef __cplusplus
+#include <cstdlib>
+#endif /* __cplusplus */
 
 /** FCU default freq */
 #define RROSACE_FCU_DEFAULT_FREQ (RROSACE_DEFAULT_CYBER_FREQ)
@@ -149,7 +152,7 @@ public:
         r_va_c_out(other.r_va_c_out), m_dt(other.m_dt) {}
 
   /**
-   * @brief Flight control unit copy assignement
+   * @brief Flight control unit copy assignment
    * @param[in] other another flight control unit to construct
    */
   FlightControlUnit &operator=(const FlightControlUnit &other) {
@@ -169,7 +172,7 @@ public:
    * @brief Flight control unit move assignement
    * @param[in] ' ' an flight control unit to move
    */
-  FlightControlUnit &operator=(FlightControlUnit &&) = default;
+  FlightControlUnit &operator=(FlightControlUnit &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -186,7 +189,6 @@ public:
   [[nodiscard]]
 #endif
   int step() {
-    int ret_code = EXIT_FAILURE;
 
     rrosace_fcu_set_h_c(p_fcu, r_h_c_in);
     rrosace_fcu_set_vz_c(p_fcu, r_vz_c_in);
@@ -196,12 +198,22 @@ public:
     r_vz_c_out = rrosace_fcu_get_vz_c(p_fcu);
     r_va_c_out = rrosace_fcu_get_va_c(p_fcu);
 
-    ret_code = (r_h_c_in == r_h_c_out) && (r_vz_c_in == r_vz_c_out) &&
-                       (r_va_c_in == r_va_c_out)
-                   ? EXIT_SUCCESS
-                   : EXIT_FAILURE;
+    return (r_h_c_in == r_h_c_out) && (r_vz_c_in == r_vz_c_out) &&
+                   (r_va_c_in == r_va_c_out)
+               ? EXIT_SUCCESS
+               : EXIT_FAILURE;
+  }
 
-    return ret_code;
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 } /* namespace RROSACE */

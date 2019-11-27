@@ -147,7 +147,7 @@ public:
    * @brief Flight dynamics move assignement
    * @param[in] ' ' an flight dynamics to move
    */
-  FlightDynamics &operator=(FlightDynamics &&) = default;
+  FlightDynamics &operator=(FlightDynamics &&) = delete;
 
 #endif /* __cplusplus > 199711L */
 
@@ -166,6 +166,18 @@ public:
   int step() {
     return rrosace_flight_dynamics_step(p_flight_dynamics, r_delta_e, r_t, &r_h,
                                         &r_vz, &r_va, &r_q, &r_az, m_dt);
+  }
+
+/**
+ * @brief Get period set in model
+ * @return period, in s
+ */
+#if __cplusplus >= 201703L
+  [[nodiscard]]
+#endif
+  double
+  get_dt() const {
+    return m_dt;
   }
 };
 } /* namespace RROSACE */
