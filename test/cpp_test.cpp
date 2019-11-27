@@ -28,7 +28,6 @@ auto main() -> int {
   std::cout << "This test is considered as a success when the executable "
                "succesfully link with the librrosace..."
             << std::endl;
-  bool ret = true;
 
   // Elevator
   {
@@ -99,6 +98,8 @@ auto main() -> int {
     double q_f;
     double az_f;
 
+    std::cout << "Filters test" << std::endl;
+
     RROSACE::AltitudeFilter altitudeFilter = RROSACE::AltitudeFilter(h, h_f);
     RROSACE::VerticalAirspeedFilter verticalAirspeedFilter =
         RROSACE::VerticalAirspeedFilter(vz, vz_f);
@@ -123,8 +124,7 @@ auto main() -> int {
 
   // Flight mode
   {
-    const RROSACE::FlightMode::Mode mode_in =
-        RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
+    const RROSACE::FlightMode::Mode mode_in = RROSACE_COMMANDED;
     RROSACE::FlightMode::Mode mode_out;
 
     std::cout << "Flight mode test" << std::endl;
@@ -133,8 +133,8 @@ auto main() -> int {
 
     (void)flight_mode.step();
 
-    std::cout << "mode: " << RROSACE::FlightMode::Mode::RROSACE_COMMANDED
-              << " -> " << mode_out << std::endl;
+    std::cout << "mode: " << RROSACE_COMMANDED << " -> " << mode_out
+              << std::endl;
   }
 
   // FCU
@@ -160,8 +160,7 @@ auto main() -> int {
 
   // FCCs
   {
-    const RROSACE::FlightMode::Mode mode =
-        RROSACE::FlightMode::Mode::RROSACE_COMMANDED;
+    const RROSACE::FlightMode::Mode mode = RROSACE_COMMANDED;
 
     const double h = RROSACE::H_EQ;
     const double vz = RROSACE::VZ_EQ;
@@ -176,8 +175,7 @@ auto main() -> int {
     double delta_e_c;
     double delta_th_c;
 
-    const RROSACE::MasterInLaw &other_master_in_law =
-        RROSACE::MasterInLaw::RROSACE_NOT_MASTER_IN_LAW;
+    const RROSACE::MasterInLaw &other_master_in_law = RROSACE_NOT_MASTER_IN_LAW;
 
     RROSACE::RelayState relay_delta_e_c;
     RROSACE::RelayState relay_delta_th_c;
@@ -197,14 +195,46 @@ auto main() -> int {
     (void)flightControlComputerCommand.step();
     (void)flightControlComputerMonitor.step();
 
-    std::cout << "delta_e_c: " << RROSACE::DELTA_E_C_EQ << " -> " << delta_e_c << std::endl;
-    std::cout << "delta_th_c: " << RROSACE::DELTA_TH_C_EQ << " -> " << delta_th_c << std::endl;
-    std::cout << "relay_delta_e_c: " << RROSACE::RelayState::RROSACE_RELAY_CLOSED << " ->" << relay_delta_e_c << std::endl;
-    std::cout << "relay_delta_th_c: " << RROSACE::RelayState::RROSACE_RELAY_CLOSED << " -> " << relay_delta_th_c << std::endl;
-    std::cout << "master_in_law: " << RROSACE::MasterInLaw::RROSACE_MASTER_IN_LAW << " -> " << master_in_law << std::endl;
+    std::cout << "delta_e_c: " << RROSACE::DELTA_E_C_EQ << " -> " << delta_e_c
+              << std::endl;
+    std::cout << "delta_th_c: " << RROSACE::DELTA_TH_C_EQ << " -> "
+              << delta_th_c << std::endl;
+    std::cout << "relay_delta_e_c: " << RROSACE_RELAY_CLOSED << " ->"
+              << relay_delta_e_c << std::endl;
+    std::cout << "relay_delta_th_c: " << RROSACE_RELAY_CLOSED << " -> "
+              << relay_delta_th_c << std::endl;
+    std::cout << "master_in_law: " << RROSACE_MASTER_IN_LAW << " -> "
+              << master_in_law << std::endl;
+  }
+
+  // Cables
+  {
+    const RROSACE::Cables::Input input_1 = {
+        RROSACE::DELTA_E_C_EQ, RROSACE::DELTA_TH_C_EQ, RROSACE_RELAY_CLOSED,
+        RROSACE_RELAY_CLOSED};
+
+    const RROSACE::Cables::Input input_2 = {
+        RROSACE::DELTA_E_C_EQ, RROSACE::DELTA_TH_C_EQ, RROSACE_RELAY_CLOSED,
+        RROSACE_RELAY_CLOSED};
+
+    RROSACE::Cables::Output output;
+
+    std::cout << "Cables test" << std::endl;
+
+    RROSACE::Cables cables = RROSACE::Cables(
+        input_1.delta_e_c, input_1.delta_th_c, input_1.relay_delta_e_c,
+        input_1.relay_delta_th_c, input_2.delta_e_c, input_2.delta_th_c,
+        input_2.relay_delta_e_c, input_2.relay_delta_th_c, output.delta_e_c,
+        output.delta_th_c);
+    (void)cables.step();
+
+    std::cout << "delta_e_c: " << RROSACE::DELTA_E_C_EQ << " -> "
+              << output.delta_e_c << std::endl;
+    std::cout << "delta_th_c: " << RROSACE::DELTA_TH_C_EQ << " -> "
+              << output.delta_th_c << std::endl;
   }
 
   std::cout << "...OK" << std::endl;
 
-  return (ret ? EXIT_SUCCESS : EXIT_FAILURE);
+  return EXIT_SUCCESS;
 }
