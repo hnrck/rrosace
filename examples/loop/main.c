@@ -206,12 +206,9 @@ static int simulation_step(models_t *p_models, values_t *p_values,
   double dt;
 
   static size_t logical_time = 0;
-  static const size_t elevator_logical_period =
-      (size_t)(RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_ELEVATOR_DEFAULT_FREQ);
-  static const size_t engine_logical_period =
-      (size_t)(RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_ENGINE_DEFAULT_FREQ);
-  static const size_t flight_dynamics_logical_period = (size_t)(
-      RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_FLIGHT_DYNAMICS_DEFAULT_FREQ);
+  static const size_t elevator_logical_period = 1;
+  static const size_t engine_logical_period = 1;
+  static const size_t flight_dynamics_logical_period = 1;
   static const size_t altitude_filter_logical_period =
       (size_t)(RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_FREQ_50_HZ);
   static const size_t airspeed_filter_logical_period =
@@ -228,8 +225,7 @@ static int simulation_step(models_t *p_models, values_t *p_values,
       RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_FLIGHT_MODE_DEFAULT_FREQ);
   static const size_t fcc_logical_period =
       (size_t)(RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_FCC_DEFAULT_FREQ);
-  static const size_t cables_logical_period =
-      (size_t)(RROSACE_DEFAULT_PHYSICAL_FREQ / RROSACE_CABLES_DEFAULT_FREQ);
+  static const size_t cables_logical_period = 1;
 
   if (!p_models || !p_values || !p_time) {
     goto out;
