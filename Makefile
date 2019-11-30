@@ -50,6 +50,14 @@ example_loop: all
 run_example_loop: example_loop
 	${BUILD_DIR}/usr/bin/$^
 
+# C++ simple loop for illustration
+example_loop_cpp: all
+	cmake --build ${BUILD_DIR} --target ${@}
+
+# Run simple loop
+run_example_loop_cpp: example_loop_cpp
+	${BUILD_DIR}/usr/bin/$^
+
 # Format files
 format: gen
 	cmake --build ${BUILD_DIR} --target ${@}

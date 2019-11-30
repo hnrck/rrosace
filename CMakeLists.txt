@@ -155,6 +155,11 @@ add_executable(example_loop ${CMAKE_SOURCE_DIR}/examples/loop/main.c)
 target_link_libraries(example_loop rrosace)
 set_target_properties(example_loop PROPERTIES SOVERSION ${ABI_VERSION_MAJOR} VERSION ${ABI_VERSION})
 
+# Simple simulation loop in C++
+add_executable(example_loop_cpp ${CMAKE_SOURCE_DIR}/examples/loop_cpp/main.cpp)
+target_link_libraries(example_loop_cpp rrosace)
+set_target_properties(example_loop_cpp PROPERTIES SOVERSION ${ABI_VERSION_MAJOR} VERSION ${ABI_VERSION})
+
 #-----------------------------------------------------------------------------------------------------------------------
 
 
