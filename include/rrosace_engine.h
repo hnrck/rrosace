@@ -150,15 +150,14 @@ public:
    */
   ~Engine() { rrosace_engine_del(p_engine); }
 
-/**
- * @brief  Execute an engine model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_engine_step(p_engine, r_delta_th_c, &r_t, m_dt);
+  /**
+   * @brief  Execute an engine model instance
+   */
+  void step() {
+    const int ret = rrosace_engine_step(p_engine, r_delta_th_c, &r_t, m_dt);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("Engine step failed."));
+    }
   }
 
 /**

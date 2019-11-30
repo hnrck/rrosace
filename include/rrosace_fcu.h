@@ -181,14 +181,10 @@ public:
    */
   ~FlightControlUnit() { rrosace_fcu_del(p_fcu); }
 
-/**
- * @brief  Execute a flight control unit model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
+  /**
+   * @brief  Execute a flight control unit model instance
+   */
+  void step() {
 
     rrosace_fcu_set_h_c(p_fcu, r_h_c_in);
     rrosace_fcu_set_vz_c(p_fcu, r_vz_c_in);
@@ -198,10 +194,10 @@ public:
     r_vz_c_out = rrosace_fcu_get_vz_c(p_fcu);
     r_va_c_out = rrosace_fcu_get_va_c(p_fcu);
 
-    return (r_h_c_in == r_h_c_out) && (r_vz_c_in == r_vz_c_out) &&
-                   (r_va_c_in == r_va_c_out)
-               ? EXIT_SUCCESS
-               : EXIT_FAILURE;
+    if ((r_h_c_in != r_h_c_out) || (r_vz_c_in != r_vz_c_out) ||
+        (r_va_c_in != r_va_c_out)) {
+      throw(std::runtime_error("FCU step failed."));
+    }
   }
 
 /**

@@ -162,15 +162,14 @@ public:
    */
   ~Filter() { rrosace_filter_del(p_filter); }
 
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_filter_step(p_filter, r_value, &r_filtered_value);
+  /**
+   * @brief  Execute a filter model instance
+   */
+  void step() {
+    const int ret = rrosace_filter_step(p_filter, r_value, &r_filtered_value);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("Filter step failed."));
+    }
   }
 
 /**
@@ -209,16 +208,10 @@ public:
                  rrosace_filter_frequency f = RROSACE_FILTER_FREQ_50HZ)
       : filter(rrosace_filter_new(RROSACE_ALTITUDE_FILTER, f), h, h_f,
                FREQ_50_HZ) {}
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return filter.step();
-  }
+  /**
+   * @brief  execute a filter model instance
+   */
+  void step() { filter.step(); }
 
 /**
  * @brief Get period set in model
@@ -256,16 +249,11 @@ public:
                          rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_VERTICAL_AIRSPEED_FILTER, f), vz,
                vz_f, FREQ_100_HZ) {}
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return filter.step();
-  }
+
+  /**
+   * @brief  execute a filter model instance
+   */
+  void step() { filter.step(); }
 
 /**
  * @brief Get period set in model
@@ -302,16 +290,11 @@ public:
                      rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_TRUE_AIRSPEED_FILTER, f), va, va_f,
                FREQ_100_HZ) {}
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return filter.step();
-  }
+
+  /**
+   * @brief  execute a filter model instance
+   */
+  void step() { filter.step(); }
 
 /**
  * @brief Get period set in model
@@ -348,16 +331,11 @@ public:
                   rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_PITCH_RATE_FILTER, f), q, q_f,
                FREQ_100_HZ) {}
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return filter.step();
-  }
+
+  /**
+   * @brief  execute a filter model instance
+   */
+  void step() { filter.step(); }
 
 /**
  * @brief Get period set in model
@@ -397,16 +375,10 @@ public:
       : filter(rrosace_filter_new(RROSACE_VERTICAL_ACCELERATION_FILTER, f), az,
                az_f, FREQ_100_HZ) {}
 
-/**
- * @brief  Execute a filter model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return filter.step();
-  }
+  /**
+   * @brief  execute a filter model instance
+   */
+  void step() { filter.step(); }
 
 /**
  * @brief Get period set in model

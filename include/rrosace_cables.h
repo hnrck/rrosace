@@ -164,14 +164,10 @@ public:
    */
   ~Cables() {}
 
-/**
- * @brief  Execute an cables model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
+  /**
+   * @brief  Execute an cables model instance
+   */
+  void step() {
     int ret;
     const Input inputs[2] = {{r_delta_e_c_partial_1, r_delta_th_c_partial_1,
                               r_relay_delta_e_c_1, r_relay_delta_th_c_1},
@@ -181,7 +177,9 @@ public:
     ret = rrosace_cables_step(inputs, 2, &output);
     r_delta_e_c = output.delta_e_c;
     r_delta_th_c = output.delta_th_c;
-    return ret;
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("Cables step failed."));
+    }
   }
 
 /**

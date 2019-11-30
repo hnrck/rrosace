@@ -156,16 +156,16 @@ public:
    */
   ~FlightDynamics() { rrosace_flight_dynamics_del(p_flight_dynamics); }
 
-/**
- * @brief  Execute a flight dynamics model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_flight_dynamics_step(p_flight_dynamics, r_delta_e, r_t, &r_h,
-                                        &r_vz, &r_va, &r_q, &r_az, m_dt);
+  /**
+   * @brief  Execute a flight dynamics model instance
+   */
+  void step() {
+    const int ret =
+        rrosace_flight_dynamics_step(p_flight_dynamics, r_delta_e, r_t, &r_h,
+                                     &r_vz, &r_va, &r_q, &r_az, m_dt);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("Flight dynamics step failed."));
+    }
   }
 
 /**

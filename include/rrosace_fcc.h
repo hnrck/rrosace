@@ -195,17 +195,16 @@ public:
    */
   ~FlightControlComputerCommand() { rrosace_fcc_del(p_fcc); }
 
-/**
- * @brief  execute a flight control computer model instance
- * @return exit_success if ok, else exit_failure
- */
-#if __cplusplus >= 201703l
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_fcc_com_step(p_fcc, r_mode, r_h, r_vz, r_va, r_q, r_az,
-                                r_h_c, r_vz_c, r_va_c, &r_delta_e_c,
-                                &r_delta_th_c, m_dt);
+  /**
+   * @brief  execute a flight control computer model instance
+   */
+  void step() {
+    const int ret =
+        rrosace_fcc_com_step(p_fcc, r_mode, r_h, r_vz, r_va, r_q, r_az, r_h_c,
+                             r_vz_c, r_va_c, &r_delta_e_c, &r_delta_th_c, m_dt);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("FCC COM step failed."));
+    }
   }
 
 /**
@@ -321,18 +320,17 @@ public:
    */
   ~FlightControlComputerMonitor() { rrosace_fcc_del(p_fcc); }
 
-/**
- * @brief  execute a flight control computer model instance
- * @return exit_success if ok, else exit_failure
- */
-#if __cplusplus >= 201703l
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_fcc_mon_step(
+  /**
+   * @brief  execute a flight control computer model instance
+   */
+  void step() {
+    const int ret = rrosace_fcc_mon_step(
         p_fcc, r_mode, r_h, r_vz, r_va, r_q, r_az, r_h_c, r_vz_c, r_va_c,
         r_delta_e_c, r_delta_th_c, r_other_master_in_law, &r_relay_delta_e_c,
         &r_relay_delta_th_c, &r_master_in_law, m_dt);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("FCC MON step failed."));
+    }
   }
 
 /**
@@ -438,16 +436,10 @@ public:
    */
   ~FlightControlComputer() { delete (p_flight_control_computer); }
 
-/**
- * @brief  execute a flight control computer model instance
- * @return exit_success if ok, else exit_failure
- */
-#if __cplusplus >= 201703l
-  [[nodiscard]]
-#endif
-  int step() {
-    return p_flight_control_computer->step();
-  }
+  /**
+   * @brief  execute a flight control computer model instance
+   */
+  void step() { p_flight_control_computer->step(); }
 
 /**
  * @brief Get period set in model

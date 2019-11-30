@@ -10,7 +10,7 @@
 project(rrosace C CXX)
 
 # CMake minimum version required set by default, might be changed.
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.8)
 
 # Description summary of the project.
 set(DESCRIPTION_SUMMARY "RROSACE")

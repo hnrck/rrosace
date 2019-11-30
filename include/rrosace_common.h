@@ -22,6 +22,9 @@
 
 #ifdef __cplusplus
 
+#include <cstdlib>
+#include <exception>
+
 #if __cplusplus <= 199711L
 #ifndef nullptr
 #define nullptr NULL
@@ -37,7 +40,7 @@ public:
 #else
       = default;
 #endif /* __cplusplus <= 199711L */
-  virtual int step() = 0;
+  virtual void step() = 0;
   virtual double get_dt() const = 0;
 };
 

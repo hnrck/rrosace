@@ -158,17 +158,15 @@ public:
    */
   ~FlightMode() { rrosace_flight_mode_del(p_flight_mode); }
 
-/**
- * @brief  Execute a flight mode model instance
- * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
- */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
+  /**
+   * @brief  Execute a flight mode model instance
+   */
+  void step() {
     rrosace_flight_mode_set_mode(p_flight_mode, r_mode_in);
     r_mode_out = rrosace_flight_mode_get_mode(p_flight_mode);
-    return (r_mode_in == r_mode_out ? EXIT_SUCCESS : EXIT_FAILURE);
+    if (r_mode_in != r_mode_out) {
+      throw(std::runtime_error("Flight mode step failed."));
+    }
   }
 
 /**

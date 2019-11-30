@@ -159,13 +159,13 @@ public:
 
   /**
    * @brief Execute an elevator model instance
-   * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
    */
-#if __cplusplus >= 201703L
-  [[nodiscard]]
-#endif
-  int step() {
-    return rrosace_elevator_step(p_elevator, r_delta_e_c, &r_delta_e, m_dt);
+  void step() {
+    const int ret =
+        rrosace_elevator_step(p_elevator, r_delta_e_c, &r_delta_e, m_dt);
+    if (ret == EXIT_FAILURE) {
+      throw(std::runtime_error("Elevator step failed."));
+    }
   }
 
 /**
