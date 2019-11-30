@@ -114,7 +114,7 @@ public:
    * default
    */
   Elevator(double omega, double xi, const double &delta_e_c, double &delta_e,
-           double dt = 1 / DEFAULT_FREQ)
+           double dt = 1. / DEFAULT_FREQ)
       : p_elevator(rrosace_elevator_new(omega, xi)), r_delta_e_c(delta_e_c),
         r_delta_e(delta_e), m_dt(dt) {}
 

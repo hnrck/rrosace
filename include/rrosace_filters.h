@@ -207,7 +207,8 @@ public:
    */
   AltitudeFilter(const double &h, double &h_f,
                  rrosace_filter_frequency f = RROSACE_FILTER_FREQ_50HZ)
-      : filter(rrosace_filter_new(RROSACE_ALTITUDE_FILTER, f), h, h_f, f) {}
+      : filter(rrosace_filter_new(RROSACE_ALTITUDE_FILTER, f), h, h_f,
+               FREQ_50_HZ) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -254,7 +255,7 @@ public:
   VerticalAirspeedFilter(const double &vz, double &vz_f,
                          rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_VERTICAL_AIRSPEED_FILTER, f), vz,
-               vz_f, f) {}
+               vz_f, FREQ_100_HZ) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -299,7 +300,8 @@ public:
    */
   TrueAirspeedFilter(const double &va, double &va_f,
                      rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
-      : filter(rrosace_filter_new(RROSACE_TRUE_AIRSPEED_FILTER, f), va, va_f, f) {}
+      : filter(rrosace_filter_new(RROSACE_TRUE_AIRSPEED_FILTER, f), va, va_f,
+               FREQ_100_HZ) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -345,7 +347,7 @@ public:
   PitchRateFilter(const double &q, double &q_f,
                   rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_PITCH_RATE_FILTER, f), q, q_f,
-               f) {}
+               FREQ_100_HZ) {}
 /**
  * @brief  Execute a filter model instance
  * @return EXIT_SUCCESS if OK, else EXIT_FAILURE
@@ -393,7 +395,7 @@ public:
       const double &az, double &az_f,
       rrosace_filter_frequency f = RROSACE_FILTER_FREQ_100HZ)
       : filter(rrosace_filter_new(RROSACE_VERTICAL_ACCELERATION_FILTER, f), az,
-               az_f, f) {}
+               az_f, FREQ_100_HZ) {}
 
 /**
  * @brief  Execute a filter model instance
