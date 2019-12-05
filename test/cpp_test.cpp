@@ -181,12 +181,12 @@ auto main() -> int {
       double delta_e_c;
       double delta_th_c;
 
-      const RROSACE::MasterInLaw &other_master_in_law =
+      const RROSACE::FlightControlComputer::MasterInLaw &other_master_in_law =
           RROSACE_NOT_MASTER_IN_LAW;
 
-      RROSACE::RelayState relay_delta_e_c;
-      RROSACE::RelayState relay_delta_th_c;
-      RROSACE::MasterInLaw master_in_law;
+      RROSACE::Cables::RelayState relay_delta_e_c;
+      RROSACE::Cables::RelayState relay_delta_th_c;
+      RROSACE::FlightControlComputer::MasterInLaw master_in_law;
 
       std::cout << "FCC test" << std::endl;
 

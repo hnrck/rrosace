@@ -29,6 +29,13 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/** RROSACE relays states */
+enum rrosace_relay_state {
+  RROSACE_RELAY_CLOSED, /**< relay is closed, equivalent to True */
+  RROSACE_RELAY_OPENED  /**< relay is opened, equivalent to False */
+};
+typedef enum rrosace_relay_state rrosace_relay_state_t;
+
 /** @struct rrosace_cables_input RROSACE cables input data from FCCs */
 struct rrosace_cables_input {
   double delta_e_c;  /**< Elevator deflection command from FCCs */
@@ -78,6 +85,13 @@ class Cables
 public:
   typedef struct rrosace_cables_input Input;
   typedef struct rrosace_cables_output Output;
+
+  /** Relay is closed, equivalent to True */
+  static const int RELAY_CLOSED = RROSACE_RELAY_CLOSED;
+  /** Relay is opened, equivalent to False */
+  static const int RELAY_OPENED = RROSACE_RELAY_OPENED;
+
+  typedef enum rrosace_relay_state RelayState;
 
 private:
   const double &r_delta_e_c_partial_1;

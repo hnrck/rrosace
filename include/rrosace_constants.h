@@ -68,20 +68,6 @@ typedef enum rrosace_default_freq rrosace_default_freq_t;
 /** Default frequency for physical components */
 #define RROSACE_DEFAULT_PHYSICAL_FREQ (RROSACE_FREQ_200_HZ)
 
-/** RROSACE relays states */
-enum rrosace_relay_state {
-  RROSACE_RELAY_CLOSED, /**< relay is closed, equivalent to True */
-  RROSACE_RELAY_OPENED  /**< relay is opened, equivalent to False */
-};
-typedef enum rrosace_relay_state rrosace_relay_state_t;
-
-/** RROSACE master in law states */
-enum rrosace_master_in_law {
-  RROSACE_MASTER_IN_LAW,    /**< is master in law */
-  RROSACE_NOT_MASTER_IN_LAW /**< is not master in law */
-};
-typedef enum rrosace_master_in_law rrosace_master_in_law_t;
-
 #ifdef __cplusplus
 namespace RROSACE {
 
@@ -132,19 +118,6 @@ static const int FREQ_200_HZ = RROSACE_FREQ_200_HZ;
 static const int DEFAULT_CYBER_FREQ = RROSACE_DEFAULT_CYBER_FREQ;
 /** Default frequency for physical components */
 static const int DEFAULT_PHYSICAL_FREQ = RROSACE_DEFAULT_PHYSICAL_FREQ;
-
-/** Relay is closed, equivalent to True */
-static const int RELAY_CLOSED = RROSACE_RELAY_CLOSED;
-/** Relay is opened, equivalent to False */
-static const int RELAY_OPENED = RROSACE_RELAY_OPENED;
-
-/** Is master in law */
-static const int MASTER_IN_LAW = RROSACE_MASTER_IN_LAW;
-/** Is not master in law */
-static const int NOT_MASTER_IN_LAW = RROSACE_NOT_MASTER_IN_LAW;
-
-typedef enum rrosace_relay_state RelayState;
-typedef enum rrosace_master_in_law MasterInLaw;
 } /* namespace RROSACE */
 #endif /* __cplusplus */
 

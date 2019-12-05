@@ -18,6 +18,7 @@
 #ifndef RROSACE_FCC_H
 #define RROSACE_FCC_H
 
+#include <rrosace_cables.h>
 #include <rrosace_constants.h>
 #include <rrosace_flight_mode.h>
 
@@ -26,6 +27,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/** RROSACE master in law states */
+enum rrosace_master_in_law {
+  RROSACE_MASTER_IN_LAW,    /**< is master in law */
+  RROSACE_NOT_MASTER_IN_LAW /**< is not master in law */
+};
+typedef enum rrosace_master_in_law rrosace_master_in_law_t;
 
 /** @struct FCC model structure */
 struct rrosace_fcc;
@@ -108,7 +116,15 @@ int rrosace_fcc_mon_step(rrosace_fcc_t *p_fcc, rrosace_mode_t mode, double h_f,
 }
 namespace RROSACE {
 
-class IFlightControlComputer : public Model {};
+class IFlightControlComputer : public Model {
+public:
+  /** Is master in law */
+  static const int MASTER_IN_LAW = RROSACE_MASTER_IN_LAW;
+  /** Is not master in law */
+  static const int NOT_MASTER_IN_LAW = RROSACE_NOT_MASTER_IN_LAW;
+
+  typedef enum rrosace_master_in_law MasterInLaw;
+};
 
 /** @class Flight control computer
  *  @brief C++ wrapper for C-based flight control computer, based on Model
@@ -246,8 +262,8 @@ private:
 
   const MasterInLaw &r_other_master_in_law;
 
-  RelayState &r_relay_delta_e_c;
-  RelayState &r_relay_delta_th_c;
+  Cables::RelayState &r_relay_delta_e_c;
+  Cables::RelayState &r_relay_delta_th_c;
   MasterInLaw &r_master_in_law;
 
   double m_dt;
@@ -263,7 +279,7 @@ public:
       const double &va, const double &q, const double &az, const double &h_c,
       const double &vz_c, const double &va_c, const double &delta_e_c,
       const double &delta_th_c, const MasterInLaw &other_master_in_law,
-      RelayState &relay_delta_e_c, RelayState &relay_delta_th_c,
+      Cables::RelayState &relay_delta_e_c, Cables::RelayState &relay_delta_th_c,
       MasterInLaw &master_in_law, double dt)
       : p_fcc(rrosace_fcc_new()), r_mode(mode), r_h(h), r_vz(vz), r_va(va),
         r_q(q), r_az(az), r_h_c(h_c), r_vz_c(vz_c), r_va_c(va_c),
@@ -389,7 +405,7 @@ public:
       const double &va, const double &q, const double &az, const double &h_c,
       const double &vz_c, const double &va_c, const double &delta_e_c,
       const double &delta_th_c, const MasterInLaw &other_master_in_law,
-      RelayState &relay_delta_e_c, RelayState &relay_delta_th_c,
+      Cables::RelayState &relay_delta_e_c, Cables::RelayState &relay_delta_th_c,
       MasterInLaw &master_in_law, double dt = 1. / DEFAULT_FREQ)
       : p_flight_control_computer(new FlightControlComputerMonitor(
             mode, h, vz, va, q, az, h_c, vz_c, va_c, delta_e_c, delta_th_c,
