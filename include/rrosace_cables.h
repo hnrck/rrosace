@@ -83,30 +83,57 @@ class Cables
 #endif /* __cplusplus > 199711L */
     : public Model {
 public:
+  /** Alias for RROSACE cables input */
+#if __cplusplus <= 199711L
   typedef struct rrosace_cables_input Input;
+#else
+  using Input = struct rrosace_cables_input;
+#endif /* __cplusplus <= 199711L */
+
+  /** Alias for RROSACE cables output */
+#if __cplusplus <= 199711L
   typedef struct rrosace_cables_output Output;
+#else
+  using Output = struct rrosace_cables_output;
+#endif /* __cplusplus <= 199711L */
 
   /** Relay is closed, equivalent to True */
   static const int RELAY_CLOSED = RROSACE_RELAY_CLOSED;
   /** Relay is opened, equivalent to False */
   static const int RELAY_OPENED = RROSACE_RELAY_OPENED;
 
+  /** Alias for RROSACE cables relay state */
+#if __cplusplus <= 199711L
   typedef enum rrosace_relay_state RelayState;
+#else
+  using RelayState = enum rrosace_relay_state;
+#endif /* __cplusplus <= 199711L */
 
 private:
+  /** Cables first delta e commanded */
   const double &r_delta_e_c_partial_1;
+  /** Cables first delta th commanded */
   const double &r_delta_th_c_partial_1;
+  /** Cables first relay on delta e commanded */
   const RelayState &r_relay_delta_e_c_1;
+  /** Cables first relay on delta th commanded */
   const RelayState &r_relay_delta_th_c_1;
 
+  /** Cables second delta e commanded */
   const double &r_delta_e_c_partial_2;
+  /** Cables second delta th commanded */
   const double &r_delta_th_c_partial_2;
+  /** Cables second relay on delta e commanded */
   const RelayState &r_relay_delta_e_c_2;
+  /** Cables second relay on delta th commanded */
   const RelayState &r_relay_delta_th_c_2;
 
+  /** Cables delta e outputed */
   double &r_delta_e_c;
+  /** Cables delta th outputed */
   double &r_delta_th_c;
 
+  /** Cables period */
   double m_dt;
 
 public:
@@ -115,6 +142,16 @@ public:
 
   /**
    * @brief Cables constructor
+   * @param[in] delta_e_c_partial_1 Cables first delta e commanded
+   * @param[in] delta_th_c_partial_1 Cables first delta th commanded
+   * @param[in] relay_delta_e_c_1 Cables first relay on delta e commanded
+   * @param[in] relay_delta_th_c_1 Cables first relay on delta th commanded
+   * @param[in] delta_e_c_partial_2 Cables second delta e commanded
+   * @param[in] delta_th_c_partial_2 Cables second delta th commanded
+   * @param[in] relay_delta_e_c_2 Cables second relay on delta e commanded
+   * @param[in] relay_delta_th_c_2 Cables second relay on delta th commanded
+   * @param[out] delta_e_c Cables delta e outputed
+   * @param[out] delta_th_c Cables delta th outputed
    * @param[in] dt The execution period of the cables model instance, default 1
    * / DEFAULT_FREQ
    */
