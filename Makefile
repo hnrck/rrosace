@@ -66,6 +66,13 @@ format: gen
 lint: gen
 	cmake --build ${BUILD_DIR} --target ${@}
 
+# Generate doc files
+doc: gen
+	cmake --build ${BUILD_DIR} --target ${@}
+
+refman: doc
+	make -C ${BUILD_DIR}/doc/latex
+
 # Remove build environment
 clean:
 	rm -rf ${BUILD_DIR}
