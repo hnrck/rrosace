@@ -32,6 +32,7 @@
 #endif /* __cplusplus <= 199711L */
 
 namespace RROSACE {
+/// Model abstract class
 class Model {
 public:
   virtual ~Model()
@@ -40,7 +41,9 @@ public:
 #else
       = default;
 #endif /* __cplusplus <= 199711L */
+  /// Execute a model iteration
   virtual void step() = 0;
+  /// Get model period
   virtual double get_dt() const = 0;
 };
 
