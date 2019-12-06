@@ -115,14 +115,21 @@ private:
   /** Wrapped C-based flight control unit */
   rrosace_fcu_t *p_fcu; /**< C-struct fcu wrapped */
 
+  /** Altitude commanded in */
   const double &r_h_c_in;
+  /** Vertical speed commanded in */
   const double &r_vz_c_in;
+  /** Airspeed commanded in */
   const double &r_va_c_in;
 
+  /** Altitude commanded out */
   double &r_h_c_out;
+  /** Vertical speed commanded in */
   double &r_vz_c_out;
+  /** Airspeed commanded in */
   double &r_va_c_out;
 
+  /** FCU period */
   double m_dt;
 
 public:
@@ -131,6 +138,12 @@ public:
 
   /**
    * @brief Flight control unit constructor
+   * @param[in] h_c_in Altitude commanded in
+   * @param[in] vz_c_in Vertical speed commanded in
+   * @param[in] va_c_in Airspeed commanded in
+   * @param[out] h_c_out Altitude commanded out
+   * @param[out] vz_c_out Vertical speed commanded out
+   * @param[out] va_c_out Airspeed commanded out
    * @param[in] dt The execution period of the flight control unit model
    * instance, default 1 / DEFAULT_FREQ
    */
