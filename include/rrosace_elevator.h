@@ -94,10 +94,13 @@ private:
   /** Wrapped C-based elevator */
   rrosace_elevator_t *p_elevator;
 
+  /** Delta e commanded in */
   const double &r_delta_e_c;
 
+  /** Delta e out */
   double &r_delta_e;
 
+  /** Elevator period */
   double m_dt;
 
 public:
