@@ -74,7 +74,7 @@ void rrosace_flight_mode_set_mode(rrosace_flight_mode_t *p_flight_mode,
 
 /**
  * @brief Get flight mode
- * @param[in] p_flight_mode A model with a fligh mode
+ * @param[in] p_flight_mode A model with a flight mode
  * @return The mode flight mode
  */
 rrosace_mode_t
@@ -100,8 +100,10 @@ private:
   /** Wrapped C-based flight mode */
   rrosace_flight_mode_t *p_flight_mode; /**< C-struct flight_mode wrapped */
 
+  /** The flight mode to set */
   const Mode &r_mode_in;
 
+  /** The flight mode set */
   Mode &r_mode_out;
 
   double m_dt;
@@ -112,6 +114,8 @@ public:
 
   /**
    * @brief Flight mode constructor
+   * @param[in] mode_in The flight mode to set
+   * @param[out] mode_out The flight mode set
    * @param[in] dt The execution period of the flight mode model instance,
    * default 1 / DEFAULT_FREQ
    */
