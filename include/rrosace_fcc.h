@@ -135,26 +135,49 @@ private:
   /** Wrapped C-based flight control computer */
   rrosace_fcc_t *p_fcc; /**< C-struct fcc wrapped */
 
+  /** The FCC flight mode */
   const FlightMode::Mode &r_mode;
 
+  /** The FCC altitude */
   const double &r_h;
+  /** The vertical speed */
   const double &r_vz;
+  /** The airspeed */
   const double &r_va;
+  /** The pitch rate */
   const double &r_q;
+  /** The vertical acceleration */
   const double &r_az;
 
+  /** The altitude command */
   const double &r_h_c;
+  /** The vertical speed command */
   const double &r_vz_c;
+  /** The airspeed command */
   const double &r_va_c;
 
+  /** Computed delta elevator deflection */
   double &r_delta_e_c;
+  /** Computed delta throttle */
   double &r_delta_th_c;
 
+  /** The execution period of the FCC model instance */
   double m_dt;
 
 public:
   /**
    * @brief Flight control computer constructor
+   * @param[in] mode The FCC flight mode
+   * @param[in] h_f The FCC altitude
+   * @param[in] vz_f The vertical speed
+   * @param[in] va_f The airspeed
+   * @param[in] q_f The pitch rate
+   * @param[in] az_f The vertical acceleration
+   * @param[in] h_c The altitude command
+   * @param[in] vz_c The vertical speed command
+   * @param[in] va_c The airspeed command
+   * @param[out] delta_e_c A computed delta elevator deflection
+   * @param[out] delta_th_c A computed delta throttle
    * @param[in] dt The execution period of the flight control computer model
    * instance, default 1 / DEFAULT_FREQ
    */
@@ -245,32 +268,63 @@ private:
   /** Wrapped C-based flight control computer */
   rrosace_fcc_t *p_fcc; /**< C-struct fcc wrapped */
 
+  /** The FCC flight mode */
   const FlightMode::Mode &r_mode;
 
+  /** The FCC altitude */
   const double &r_h;
+  /** The vertical speed */
   const double &r_vz;
+  /** The airspeed */
   const double &r_va;
+  /** The pitch rate */
   const double &r_q;
+  /** The vertical acceleration */
   const double &r_az;
 
+  /** The altitude command */
   const double &r_h_c;
+  /** The vertical speed command */
   const double &r_vz_c;
+  /** The airspeed command */
   const double &r_va_c;
 
+  /** The delta elevator deflection to monitor */
   const double &r_delta_e_c;
+  /** The delta throttle to monitor */
   const double &r_delta_th_c;
 
+  /** Other in law */
   const MasterInLaw &r_other_master_in_law;
 
+  /** Command for delta elevator deflection relay */
   Cables::RelayState &r_relay_delta_e_c;
+  /** Command for delta throttle relay */
   Cables::RelayState &r_relay_delta_th_c;
+  /** Master in law */
   MasterInLaw &r_master_in_law;
 
+  /** The execution period of the FCC model instance */
   double m_dt;
 
 public:
   /**
    * @brief Flight control computer constructor
+   * @param[in] mode The FCC flight mode
+   * @param[in] h_f The FCC altitude
+   * @param[in] vz_f The vertical speed
+   * @param[in] va_f The airspeed
+   * @param[in] q_f The pitch rate
+   * @param[in] az_f The vertical acceleration
+   * @param[in] h_c The altitude command
+   * @param[in] vz_c The vertical speed command
+   * @param[in] va_c The airspeed command
+   * @param[in] delta_e_c_monitored The delta elevator deflection to monitor
+   * @param[in] delta_th_c_monitored The delta throttle to monitor
+   * @param[in] other in law True (!0) if other is master in law, else False (0)
+   * @param[out] relay_delta_e_c Command for delta elevator deflection relay
+   * @param[out]  relay_delta_th_c Command for delta throttle relay
+   * @param[out]  master_in_law True (!0) if master in law, else False (0)
    * @param[in] dt The execution period of the flight control computer model
    * instance, default 1 / DEFAULT_FREQ
    */
@@ -382,6 +436,17 @@ public:
 
   /**
    * @brief Flight control computer constructor
+   * @param[in] mode The FCC flight mode
+   * @param[in] h_f The FCC altitude
+   * @param[in] vz_f The vertical speed
+   * @param[in] va_f The airspeed
+   * @param[in] q_f The pitch rate
+   * @param[in] az_f The vertical acceleration
+   * @param[in] h_c The altitude command
+   * @param[in] vz_c The vertical speed command
+   * @param[in] va_c The airspeed command
+   * @param[out] delta_e_c A computed delta elevator deflection
+   * @param[out] delta_th_c A computed delta throttle
    * @param[in] dt The execution period of the flight control computer model
    * instance, default 1 / DEFAULT_FREQ
    */
@@ -397,6 +462,21 @@ public:
 
   /**
    * @brief Flight control computer constructor
+   * @param[in] mode The FCC flight mode
+   * @param[in] h_f The FCC altitude
+   * @param[in] vz_f The vertical speed
+   * @param[in] va_f The airspeed
+   * @param[in] q_f The pitch rate
+   * @param[in] az_f The vertical acceleration
+   * @param[in] h_c The altitude command
+   * @param[in] vz_c The vertical speed command
+   * @param[in] va_c The airspeed command
+   * @param[in] delta_e_c_monitored The delta elevator deflection to monitor
+   * @param[in] delta_th_c_monitored The delta throttle to monitor
+   * @param[in] other in law True (!0) if other is master in law, else False (0)
+   * @param[out] relay_delta_e_c Command for delta elevator deflection relay
+   * @param[out]  relay_delta_th_c Command for delta throttle relay
+   * @param[out]  master_in_law True (!0) if master in law, else False (0)
    * @param[in] dt The execution period of the flight control computer model
    * instance, default 1 / DEFAULT_FREQ
    */
