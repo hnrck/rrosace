@@ -89,15 +89,23 @@ private:
   rrosace_flight_dynamics_t
       *p_flight_dynamics; /**< C-struct flight_dynamics wrapped */
 
+  /** The elevator deflection in */
   const double &r_delta_e;
+  /** The thrust in */
   const double &r_t;
 
+  /** The simulated altitude out */
   double &r_h;
+  /** The simulated vertical speed out */
   double &r_vz;
+  /** The simulated true airspeed out */
   double &r_va;
+  /** The simulated pitch rate out */
   double &r_q;
+  /** The simulated vertical acceleration out */
   double &r_az;
 
+  /** The model instance execution period */
   double m_dt;
 
 public:
@@ -106,6 +114,14 @@ public:
 
   /**
    * @brief Flight dynamics constructor
+   * @param[in] delta_e The elevator deflection
+   * @param[in] t The thrust
+   * @param[out] h A simulated altitude
+   * @param[out] vz A simulated vertical speed
+   * @param[out] va A simulated true airspeed
+   * @param[out] q A simulated pitch rate
+   * @param[out] az A simulated vertical acceleration
+   * @param[in] dt The model instance execution period
    * @param[in] dt The execution period of the flight dynamics model instance,
    * default 1 / DEFAULT_FREQ
    */
