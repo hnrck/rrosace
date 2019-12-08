@@ -106,9 +106,12 @@ private:
   /** Wrapped C-based filter */
   rrosace_filter_t *p_filter; /**< C-struct filter wrapped */
 
+  /** The value to filter */
   const double &r_value;
+  /** The value filtered */
   double &r_filtered_value;
 
+  /** The execution period of the filter model instance */
   double m_dt;
 
 public:
