@@ -1,8 +1,8 @@
 # Revision history for rrosace
 
-## 1.1.0  -- 2019-11-20
+## 1.2.0  -- 2019-12-08
 
-* Fixing minor issues and style
-* Improving code lisibility
-* Adding an example
-* Adding an installation test
+* Adding C++ interfaces
+* Improving code readability
+* Improving documentation
+* Adding data structures aliasing

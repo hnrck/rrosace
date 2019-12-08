@@ -1,6 +1,6 @@
 # file CMakeLists.txt
 # author Henrick Deschamps
-# version 1.1.0
+# version 1.2.0
 # date 2016-06-10
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ set(DESCRIPTION_SUMMARY "${DESCRIPTION_SUMMARY} Redundant-ROSACE")
 
 # Application Binary Interface version for library/application interfacing.
 set(ABI_VERSION_MAJOR "1")
-set(ABI_VERSION_MINOR "1")
+set(ABI_VERSION_MINOR "2")
 set(ABI_VERSION_PATCH "0")
 set(ABI_VERSION "${ABI_VERSION_MAJOR}.${ABI_VERSION_MINOR}.${ABI_VERSION_PATCH}")
 
