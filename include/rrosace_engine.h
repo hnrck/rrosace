@@ -91,8 +91,12 @@ private:
   /** Wrapped C-based elevator */
   rrosace_engine_t *p_engine; /**< C-struct engine wrapped */
 
+  /** The commanded delta throttle in */
   const double &r_delta_th_c;
+  /** The simulated thrust out */
   double &r_t;
+
+  /** The execution period of the engine model instance */
   double m_dt;
 
 public:
