@@ -24,6 +24,7 @@
 
 #include <cstdlib>
 #include <exception>
+#include <stdexcept>
 
 #if __cplusplus <= 199711L
 #ifndef nullptr
@@ -35,12 +36,31 @@ namespace RROSACE {
 /** Model abstract class */
 class Model {
 public:
+  Model()
+#if __cplusplus <= 199711L
+      {};
+#else
+      = default;
+#endif /* __cplusplus <= 199711L */
+
   virtual ~Model()
 #if __cplusplus <= 199711L
       {};
 #else
       = default;
 #endif /* __cplusplus <= 199711L */
+
+  Model(const Model &)
+#if __cplusplus <= 199711L
+      {};
+#else
+      = default;
+
+  Model &operator=(const Model &) = default;
+  Model(Model &&) = default;
+  Model &operator=(Model &&) = default;
+#endif /* __cplusplus <= 199711L */
+
   /** Execute a model iteration */
   virtual void step() = 0;
   /** Get model period */
