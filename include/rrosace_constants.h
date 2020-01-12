@@ -71,51 +71,125 @@ typedef enum rrosace_default_freq rrosace_default_freq_t;
 #ifdef __cplusplus
 namespace RROSACE {
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial elevator deflection command */
 static const double DELTA_E_EQ = RROSACE_DELTA_E_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial throttle */
 static const double DELTA_TH_EQ = RROSACE_DELTA_TH_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial thrust */
 static const double T_EQ = RROSACE_T_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial elevator deflection command */
 static const double DELTA_E_C_EQ = RROSACE_DELTA_E_C_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial delta throttle command */
 static const double DELTA_TH_C_EQ = RROSACE_DELTA_TH_C_EQ;
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial Altitude */
 static const double H_EQ = RROSACE_H_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Iintial true airspeed */
 static const double VA_EQ = RROSACE_VA_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial vertical speed */
 static const double VZ_EQ = RROSACE_VZ_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial pitch rate */
 static const double Q_EQ = RROSACE_Q_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial vertical acceleration */
 static const double AZ_EQ = RROSACE_AZ_EQ;
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial filtered altitude */
 static const double H_F_EQ = RROSACE_H_F_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial filtered airspeed */
 static const double VA_F_EQ = RROSACE_VA_F_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial filtered vertical speed */
 static const double VZ_F_EQ = RROSACE_VZ_F_EQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Initial filtered pitch rate */
 static const double Q_F_EQ = RROSACE_Q_F_EQ;
 /** Initial filtered vertical acceleration */
 static const double AZ_F_EQ = RROSACE_AZ_F_EQ;
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** time resolution */
 static const double TIME_RESOLUTION = RROSACE_TIME_RESOLUTION;
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** 50Hz frequency */
 static const int FREQ_50_HZ = RROSACE_FREQ_50_HZ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** 100Hz frequency */
 static const int FREQ_100_HZ = RROSACE_FREQ_100_HZ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** 200Hz frequency */
 static const int FREQ_200_HZ = RROSACE_FREQ_200_HZ;
 
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Default frequency for cyber components */
 static const int DEFAULT_CYBER_FREQ = RROSACE_DEFAULT_CYBER_FREQ;
+
+#if __cplusplus > 199711L
+constexpr
+#endif /** __cplusplus > 199711L */
 /** Default frequency for physical components */
 static const int DEFAULT_PHYSICAL_FREQ = RROSACE_DEFAULT_PHYSICAL_FREQ;
 } /* namespace RROSACE */
