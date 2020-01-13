@@ -19,7 +19,7 @@ set(DESCRIPTION_SUMMARY "${DESCRIPTION_SUMMARY} Redundant-ROSACE")
 
 # Application Binary Interface version for library/application interfacing.
 set(ABI_VERSION_MAJOR "1")
-set(ABI_VERSION_MINOR "2")
+set(ABI_VERSION_MINOR "3")
 set(ABI_VERSION_PATCH "0")
 set(ABI_VERSION "${ABI_VERSION_MAJOR}.${ABI_VERSION_MINOR}.${ABI_VERSION_PATCH}")
 

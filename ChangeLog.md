@@ -1,8 +1,6 @@
 # Revision history for rrosace
 
-## 1.2.0  -- 2019-12-08
+## 1.3.0  -- 2020-01-13
 
-* Adding C++ interfaces
-* Improving code readability
-* Improving documentation
-* Adding data structures aliasing
+* Completing model class
+* Modernizing constant declaration for C++11 (+) integration

@@ -1,4 +1,4 @@
-[![GitHub version](https://img.shields.io/badge/version-1.2.0-green.svg)](https://github.com/hnrck/rrosace/releases/tag/1.2.0)
+[![GitHub version](https://img.shields.io/badge/version-1.3.0-green.svg)](https://github.com/hnrck/rrosace/releases/tag/1.3.0)
 [![Build Status](https://travis-ci.org/hnrck/rrosace.svg?branch=master)](https://travis-ci.org/hnrck/rrosace)
 [![GitHub issues](https://img.shields.io/github/issues/hnrck/rrosace.svg)](https://github.com/hnrck/rrosace/issues)
 [![GitHub forks](https://img.shields.io/github/forks/hnrck/rrosace.svg)](https://github.com/hnrck/rrosace/network)
@@ -41,13 +41,13 @@ This repo is available at :link: [hnrck/rrosace](https://github.com/hnrck/rrosac
 Cloning can be done in HTTPS mode:
 ```bash
 $ git clone https://github.com/hnrck/rrosace
-$ git checkout tags/1.2.0
+$ git checkout tags/1.3.0
 ```
 
 or with ssh mode:
 ```bash
 $ git clone git@github.com:hnrck/rrosace.git
-$ git checkout tags/1.2.0
+$ git checkout tags/1.3.0
 ```
 
 ### 1.2. Testing the implementation
